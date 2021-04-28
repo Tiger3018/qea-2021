@@ -1,0 +1,13 @@
+{
+    "files.encoding": "gb18030",
+    "editor.tabSize": 2,
+    "files.associations": {
+        "*.toml": "toml",
+        "sys.h": "c",
+        "stm32f10x.h": "c",
+        "DataScope_DP.C": "cpp"
+    },
+    "terminal.integrated.shell.windows": "c:/Windows/System32/cmd.exe",
+    "terminal.integrated.shellArgs.windows": "",
+    "terminal.integrated.automationShell.windows": ""
+}

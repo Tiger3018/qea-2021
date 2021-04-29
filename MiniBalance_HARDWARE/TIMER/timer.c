@@ -1,12 +1,12 @@
 #include "timer.h"
   /**************************************************************************
-×÷Õß£ºÆ½ºâĞ¡³µÖ®¼Ò
-ÎÒµÄÌÔ±¦Ğ¡µê£ºhttp://shop114407458.taobao.com/
+ä½œè€…ï¼šå¹³è¡¡å°è½¦ä¹‹å®¶
+æˆ‘çš„æ·˜å®å°åº—ï¼šhttp://shop114407458.taobao.com/
 **************************************************************************/
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º¶¨Ê±Æ÷5Í¨µÀÊäÈë²¶»ñ³õÊ¼»¯
-Èë¿Ú²ÎÊı£ºÈë¿Ú²ÎÊı£ºarr£º×Ô¶¯ÖØ×°Öµ  psc£ºÊ±ÖÓÔ¤·ÖÆµÊı 
-·µ»Ø  Öµ£ºÎŞ
+å‡½æ•°åŠŸèƒ½ï¼šå®šæ—¶å™¨5é€šé“è¾“å…¥æ•è·åˆå§‹åŒ–
+å…¥å£å‚æ•°ï¼šå…¥å£å‚æ•°ï¼šarrï¼šè‡ªåŠ¨é‡è£…å€¼  pscï¼šæ—¶é’Ÿé¢„åˆ†é¢‘æ•° 
+è¿”å›  å€¼ï¼šæ— 
 **************************************************************************/
 void TIM5_Cap_Init(u16 arr,u16 psc)	
 {	 
@@ -14,283 +14,283 @@ void TIM5_Cap_Init(u16 arr,u16 psc)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	TIM_ICInitTypeDef  TIM_ICInitStructure;
  	NVIC_InitTypeDef NVIC_InitStructure;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE);	//Ê¹ÄÜTIM5Ê±ÖÓ
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC,ENABLE);  //Ê¹ÄÜGPIOÊ±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE);	//ä½¿èƒ½TIM5æ—¶é’Ÿ
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC,ENABLE);  //ä½¿èƒ½GPIOæ—¶é’Ÿ
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3; 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //PA  ÊäÈë  
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //PA  è¾“å…¥  
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_4|GPIO_Pin_11;     
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;     //Êä³ö 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;     //è¾“å‡º 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;     //2M
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_12;     
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;     //Êä³ö 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;     //è¾“å‡º 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;     //2M
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_5;     
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;     //Êä³ö 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;     //è¾“å‡º 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;     //2M
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
-	//³õÊ¼»¯¶¨Ê±Æ÷5	 
-	TIM_TimeBaseStructure.TIM_Period = arr; //Éè¶¨¼ÆÊıÆ÷×Ô¶¯ÖØ×°Öµ 
-	TIM_TimeBaseStructure.TIM_Prescaler =psc; 	//Ô¤·ÖÆµÆ÷   
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //ÉèÖÃÊ±ÖÓ·Ö¸î:TDTS = Tck_tim
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIMÏòÉÏ¼ÆÊıÄ£Ê½
-	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure); //¸ù¾İTIM_TimeBaseInitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯TIMxµÄÊ±¼ä»ùÊıµ¥Î»
+	//åˆå§‹åŒ–å®šæ—¶å™¨5	 
+	TIM_TimeBaseStructure.TIM_Period = arr; //è®¾å®šè®¡æ•°å™¨è‡ªåŠ¨é‡è£…å€¼ 
+	TIM_TimeBaseStructure.TIM_Prescaler =psc; 	//é¢„åˆ†é¢‘å™¨   
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //è®¾ç½®æ—¶é’Ÿåˆ†å‰²:TDTS = Tck_tim
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIMå‘ä¸Šè®¡æ•°æ¨¡å¼
+	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure); //æ ¹æ®TIM_TimeBaseInitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–TIMxçš„æ—¶é—´åŸºæ•°å•ä½
   
-	//³õÊ¼»¯TIM5ÊäÈë²¶»ñ²ÎÊı
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1; //Ñ¡ÔñÊäÈë¶Ë 
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+	//åˆå§‹åŒ–TIM5è¾“å…¥æ•è·å‚æ•°
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1; //é€‰æ‹©è¾“å…¥ç«¯ 
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
   TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
-  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-  TIM_ICInitStructure.TIM_ICFilter = 0x00;//ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+  TIM_ICInitStructure.TIM_ICFilter = 0x00;//é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
   TIM_ICInit(TIM5, &TIM_ICInitStructure);
 	
-		//³õÊ¼»¯TIM5ÊäÈë²¶»ñ²ÎÊı
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_2; //Ñ¡ÔñÊäÈë¶Ë 
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+		//åˆå§‹åŒ–TIM5è¾“å…¥æ•è·å‚æ•°
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_2; //é€‰æ‹©è¾“å…¥ç«¯ 
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
   TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
-  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-  TIM_ICInitStructure.TIM_ICFilter = 0x00;//ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+  TIM_ICInitStructure.TIM_ICFilter = 0x00;//é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
   TIM_ICInit(TIM5, &TIM_ICInitStructure);
 	
-		//³õÊ¼»¯TIM5ÊäÈë²¶»ñ²ÎÊı
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_3; //Ñ¡ÔñÊäÈë¶Ë 
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+		//åˆå§‹åŒ–TIM5è¾“å…¥æ•è·å‚æ•°
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_3; //é€‰æ‹©è¾“å…¥ç«¯ 
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
   TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
-  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-  TIM_ICInitStructure.TIM_ICFilter = 0x00;//ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+  TIM_ICInitStructure.TIM_ICFilter = 0x00;//é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
   TIM_ICInit(TIM5, &TIM_ICInitStructure);
 	
-		//³õÊ¼»¯TIM5ÊäÈë²¶»ñ²ÎÊı
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_4; //Ñ¡ÔñÊäÈë¶Ë 
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+		//åˆå§‹åŒ–TIM5è¾“å…¥æ•è·å‚æ•°
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_4; //é€‰æ‹©è¾“å…¥ç«¯ 
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
   TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
-  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-  TIM_ICInitStructure.TIM_ICFilter = 0x00;//ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+  TIM_ICInitStructure.TIM_ICFilter = 0x00;//é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
   TIM_ICInit(TIM5, &TIM_ICInitStructure);
 	
-	//ÖĞ¶Ï·Ö×é³õÊ¼»¯
-	NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;  //TIMÖĞ¶Ï
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //ÏÈÕ¼ÓÅÏÈ¼¶2¼¶
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //´ÓÓÅÏÈ¼¶0¼¶
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQÍ¨µÀ±»Ê¹ÄÜ
-	NVIC_Init(&NVIC_InitStructure);  //¸ù¾İNVIC_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯ÍâÉèNVIC¼Ä´æÆ÷ 	
-	TIM_ITConfig(TIM5,TIM_IT_Update|TIM_IT_CC1|TIM_IT_CC2|TIM_IT_CC3|TIM_IT_CC4,ENABLE);//ÔÊĞí¸üĞÂÖĞ¶Ï ,ÔÊĞí²¶»ñÖĞ¶Ï	
-  TIM_Cmd(TIM5,ENABLE ); 	//Ê¹ÄÜ¶¨Ê±Æ÷
+	//ä¸­æ–­åˆ†ç»„åˆå§‹åŒ–
+	NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;  //TIMä¸­æ–­
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //å…ˆå ä¼˜å…ˆçº§2çº§
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //ä»ä¼˜å…ˆçº§0çº§
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQé€šé“è¢«ä½¿èƒ½
+	NVIC_Init(&NVIC_InitStructure);  //æ ¹æ®NVIC_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–å¤–è®¾NVICå¯„å­˜å™¨ 	
+	TIM_ITConfig(TIM5,TIM_IT_Update|TIM_IT_CC1|TIM_IT_CC2|TIM_IT_CC3|TIM_IT_CC4,ENABLE);//å…è®¸æ›´æ–°ä¸­æ–­ ,å…è®¸æ•è·ä¸­æ–­	
+  TIM_Cmd(TIM5,ENABLE ); 	//ä½¿èƒ½å®šæ—¶å™¨
 }
 u16 TIM5CH1_CAPTURE_STA,TIM5CH1_CAPTURE_VAL,TIM5CH2_CAPTURE_STA,TIM5CH2_CAPTURE_VAL;
 u16 TIM5CH3_CAPTURE_STA,TIM5CH3_CAPTURE_VAL,TIM5CH4_CAPTURE_STA,TIM5CH4_CAPTURE_VAL;
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º³¬Éù²¨½ÓÊÕ»Ø²¨º¯Êı
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£ºÎŞ
+å‡½æ•°åŠŸèƒ½ï¼šè¶…å£°æ³¢æ¥æ”¶å›æ³¢å‡½æ•°
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæ— 
 **************************************************************************/
 void Read_Distane(void)
 {   
-	 TRIPA=1;//¸ßµçÆ½´¥·¢
-	 delay_us(15);  //ÑÓÊ±
-	 TRIPA=0;	//µÍµçÆ½
-		 if(TIM5CH1_CAPTURE_STA&0X80)//³É¹¦²¶»ñµ½ÁËÒ»´Î¸ßµçÆ½
+	 TRIPA=1;//é«˜ç”µå¹³è§¦å‘
+	 delay_us(15);  //å»¶æ—¶
+	 TRIPA=0;	//ä½ç”µå¹³
+		 if(TIM5CH1_CAPTURE_STA&0X80)//æˆåŠŸæ•è·åˆ°äº†ä¸€æ¬¡é«˜ç”µå¹³
 		{
 			Distance_A=TIM5CH1_CAPTURE_STA&0X3F;
-			Distance_A*=65536;	 //Òç³öÊ±¼ä×ÜºÍ
-			Distance_A+=TIM5CH1_CAPTURE_VAL;//µÃµ½×ÜµÄ¸ßµçÆ½Ê±¼ä
-			Distance_A=Distance_A*170/1000;//×ª»¯³ÉmmÎªµ¥Î»£¬ÒÀ¾İÉùÒôÔÚ¿ÕÆøÖĞ´«²¥ËÙ¶È340m/s
-			TIM5CH1_CAPTURE_STA=0;			//¿ªÆôÏÂÒ»´Î²¶»ñ
+			Distance_A*=65536;	 //æº¢å‡ºæ—¶é—´æ€»å’Œ
+			Distance_A+=TIM5CH1_CAPTURE_VAL;//å¾—åˆ°æ€»çš„é«˜ç”µå¹³æ—¶é—´
+			Distance_A=Distance_A*170/1000;//è½¬åŒ–æˆmmä¸ºå•ä½ï¼Œä¾æ®å£°éŸ³åœ¨ç©ºæ°”ä¸­ä¼ æ’­é€Ÿåº¦340m/s
+			TIM5CH1_CAPTURE_STA=0;			//å¼€å¯ä¸‹ä¸€æ¬¡æ•è·
 		}	
 		
-	  TRIPB=1;//¸ßµçÆ½´¥·¢
-	  delay_us(15);  //ÑÓÊ±
-	  TRIPB=0;	//µÍµçÆ½
-		 if(TIM5CH2_CAPTURE_STA&0X80)//³É¹¦²¶»ñµ½ÁËÒ»´Î¸ßµçÆ½
+	  TRIPB=1;//é«˜ç”µå¹³è§¦å‘
+	  delay_us(15);  //å»¶æ—¶
+	  TRIPB=0;	//ä½ç”µå¹³
+		 if(TIM5CH2_CAPTURE_STA&0X80)//æˆåŠŸæ•è·åˆ°äº†ä¸€æ¬¡é«˜ç”µå¹³
 		{
 			Distance_B=TIM5CH2_CAPTURE_STA&0X3F;
-			Distance_B*=65536;	 //Òç³öÊ±¼ä×ÜºÍ
-			Distance_B+=TIM5CH2_CAPTURE_VAL;		//µÃµ½×ÜµÄ¸ßµçÆ½Ê±¼ä
-			Distance_B=Distance_B*170/1000;//×ª»¯³ÉmmÎªµ¥Î»£¬ÒÀ¾İÉùÒôÔÚ¿ÕÆøÖĞ´«²¥ËÙ¶È340m/s
-			TIM5CH2_CAPTURE_STA=0;			//¿ªÆôÏÂÒ»´Î²¶»ñ
+			Distance_B*=65536;	 //æº¢å‡ºæ—¶é—´æ€»å’Œ
+			Distance_B+=TIM5CH2_CAPTURE_VAL;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³æ—¶é—´
+			Distance_B=Distance_B*170/1000;//è½¬åŒ–æˆmmä¸ºå•ä½ï¼Œä¾æ®å£°éŸ³åœ¨ç©ºæ°”ä¸­ä¼ æ’­é€Ÿåº¦340m/s
+			TIM5CH2_CAPTURE_STA=0;			//å¼€å¯ä¸‹ä¸€æ¬¡æ•è·
 		}		
 
-	  TRIPC=1;//¸ßµçÆ½´¥·¢
-	  delay_us(15);  //ÑÓÊ±
-	  TRIPC=0;	//µÍµçÆ½
-		 if(TIM5CH3_CAPTURE_STA&0X80)//³É¹¦²¶»ñµ½ÁËÒ»´Î¸ßµçÆ½
+	  TRIPC=1;//é«˜ç”µå¹³è§¦å‘
+	  delay_us(15);  //å»¶æ—¶
+	  TRIPC=0;	//ä½ç”µå¹³
+		 if(TIM5CH3_CAPTURE_STA&0X80)//æˆåŠŸæ•è·åˆ°äº†ä¸€æ¬¡é«˜ç”µå¹³
 		{
 			Distance_C=TIM5CH3_CAPTURE_STA&0X3F;
-			Distance_C*=65536;	 //Òç³öÊ±¼ä×ÜºÍ
-			Distance_C+=TIM5CH3_CAPTURE_VAL;		//µÃµ½×ÜµÄ¸ßµçÆ½Ê±¼ä
-			Distance_C=Distance_C*170/1000;//×ª»¯³ÉmmÎªµ¥Î»£¬ÒÀ¾İÉùÒôÔÚ¿ÕÆøÖĞ´«²¥ËÙ¶È340m/s
-			TIM5CH3_CAPTURE_STA=0;			//¿ªÆôÏÂÒ»´Î²¶»ñ
+			Distance_C*=65536;	 //æº¢å‡ºæ—¶é—´æ€»å’Œ
+			Distance_C+=TIM5CH3_CAPTURE_VAL;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³æ—¶é—´
+			Distance_C=Distance_C*170/1000;//è½¬åŒ–æˆmmä¸ºå•ä½ï¼Œä¾æ®å£°éŸ³åœ¨ç©ºæ°”ä¸­ä¼ æ’­é€Ÿåº¦340m/s
+			TIM5CH3_CAPTURE_STA=0;			//å¼€å¯ä¸‹ä¸€æ¬¡æ•è·
 		}		
 
-	  TRIPD=1;//¸ßµçÆ½´¥·¢
-	  delay_us(15);  //ÑÓÊ±
-	  TRIPD=0;	//µÍµçÆ½
-		 if(TIM5CH4_CAPTURE_STA&0X80)//³É¹¦²¶»ñµ½ÁËÒ»´Î¸ßµçÆ½
+	  TRIPD=1;//é«˜ç”µå¹³è§¦å‘
+	  delay_us(15);  //å»¶æ—¶
+	  TRIPD=0;	//ä½ç”µå¹³
+		 if(TIM5CH4_CAPTURE_STA&0X80)//æˆåŠŸæ•è·åˆ°äº†ä¸€æ¬¡é«˜ç”µå¹³
 		{
 			Distance_D=TIM5CH4_CAPTURE_STA&0X3F;
-			Distance_D*=65536;	 //Òç³öÊ±¼ä×ÜºÍ
-			Distance_D+=TIM5CH4_CAPTURE_VAL;		//µÃµ½×ÜµÄ¸ßµçÆ½Ê±¼ä
-			Distance_D=Distance_D*170/1000;//×ª»¯³ÉmmÎªµ¥Î»£¬ÒÀ¾İÉùÒôÔÚ¿ÕÆøÖĞ´«²¥ËÙ¶È340m/s
-			TIM5CH4_CAPTURE_STA=0;			//¿ªÆôÏÂÒ»´Î²¶»ñ
+			Distance_D*=65536;	 //æº¢å‡ºæ—¶é—´æ€»å’Œ
+			Distance_D+=TIM5CH4_CAPTURE_VAL;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³æ—¶é—´
+			Distance_D=Distance_D*170/1000;//è½¬åŒ–æˆmmä¸ºå•ä½ï¼Œä¾æ®å£°éŸ³åœ¨ç©ºæ°”ä¸­ä¼ æ’­é€Ÿåº¦340m/s
+			TIM5CH4_CAPTURE_STA=0;			//å¼€å¯ä¸‹ä¸€æ¬¡æ•è·
 		}				
 }
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º³¬Éù²¨»Ø²¨Âö¿í¶ÁÈ¡ÖĞ¶Ï
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£ºÎŞ
-×÷    Õß£ºÆ½ºâĞ¡³µÖ®¼Ò
+å‡½æ•°åŠŸèƒ½ï¼šè¶…å£°æ³¢å›æ³¢è„‰å®½è¯»å–ä¸­æ–­
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæ— 
+ä½œ    è€…ï¼šå¹³è¡¡å°è½¦ä¹‹å®¶
 **************************************************************************/
 void TIM5_IRQHandler(void)
 { 		    		  			    
 	u16 tsr;
 	tsr=TIM5->SR;
-				/////////////////////Í¨µÀÒ»///////////////////////////////
-	if((TIM5CH1_CAPTURE_STA&0X80)==0)//»¹Î´³É¹¦²¶»ñ	
+				/////////////////////é€šé“ä¸€///////////////////////////////
+	if((TIM5CH1_CAPTURE_STA&0X80)==0)//è¿˜æœªæˆåŠŸæ•è·	
 				{
-					if(tsr&0X01)//Òç³ö
+					if(tsr&0X01)//æº¢å‡º
 						{	     
-								if(TIM5CH1_CAPTURE_STA&0X40)//ÒÑ¾­²¶»ñµ½¸ßµçÆ½ÁË
+								if(TIM5CH1_CAPTURE_STA&0X40)//å·²ç»æ•è·åˆ°é«˜ç”µå¹³äº†
 								{
-									if((TIM5CH1_CAPTURE_STA&0X3F)==0X3F)//¸ßµçÆ½Ì«³¤ÁË
+									if((TIM5CH1_CAPTURE_STA&0X3F)==0X3F)//é«˜ç”µå¹³å¤ªé•¿äº†
 									{
-										TIM5CH1_CAPTURE_STA|=0X80;//±ê¼Ç³É¹¦²¶»ñÁËÒ»´Î
+										TIM5CH1_CAPTURE_STA|=0X80;//æ ‡è®°æˆåŠŸæ•è·äº†ä¸€æ¬¡
 										TIM5CH1_CAPTURE_VAL=0XFFFF;
 									}else TIM5CH1_CAPTURE_STA++;
 								}	 
 						}
-						if(tsr&0x02)//²¶»ñ1·¢Éú²¶»ñÊÂ¼ş
+						if(tsr&0x02)//æ•è·1å‘ç”Ÿæ•è·äº‹ä»¶
 					{	 	
-									if(TIM5CH1_CAPTURE_STA&0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ 		
+									if(TIM5CH1_CAPTURE_STA&0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿ 		
 									{	  	
-									TIM5CH1_CAPTURE_STA|=0X80;		//±ê¼Ç³É¹¦²¶»ñµ½Ò»´Î¸ßµçÆ½Âö¿í
-									TIM5CH1_CAPTURE_VAL=TIM5->CCR1;	//»ñÈ¡µ±Ç°µÄ²¶»ñÖµ.
-									TIM5->CCER&=~(1<<1);			//CC1P=0 ÉèÖÃÎªÉÏÉıÑØ²¶»ñ
-									}else  								//»¹Î´¿ªÊ¼,µÚÒ»´Î²¶»ñÉÏÉıÑØ
+									TIM5CH1_CAPTURE_STA|=0X80;		//æ ‡è®°æˆåŠŸæ•è·åˆ°ä¸€æ¬¡é«˜ç”µå¹³è„‰å®½
+									TIM5CH1_CAPTURE_VAL=TIM5->CCR1;	//è·å–å½“å‰çš„æ•è·å€¼.
+									TIM5->CCER&=~(1<<1);			//CC1P=0 è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·
+									}else  								//è¿˜æœªå¼€å§‹,ç¬¬ä¸€æ¬¡æ•è·ä¸Šå‡æ²¿
 									{	
-									TIM5CH1_CAPTURE_STA=0;			//Çå¿Õ
+									TIM5CH1_CAPTURE_STA=0;			//æ¸…ç©º
 									TIM5CH1_CAPTURE_VAL=0;
-									TIM5CH1_CAPTURE_STA|=0X40;		//±ê¼Ç²¶»ñµ½ÁËÉÏÉıÑØ
-									TIM5->CNT=0;					//¼ÆÊıÆ÷Çå¿Õ
-									TIM5->CCER|=1<<1; 				//CC1P=1 ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+									TIM5CH1_CAPTURE_STA|=0X40;		//æ ‡è®°æ•è·åˆ°äº†ä¸Šå‡æ²¿
+									TIM5->CNT=0;					//è®¡æ•°å™¨æ¸…ç©º
+									TIM5->CCER|=1<<1; 				//CC1P=1 è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 									}		    
 					 }			     	    					   
 		   }
-		 /////////////////////Í¨µÀ¶ş///////////////////////////////
-			if((TIM5CH2_CAPTURE_STA&0X80)==0)//»¹Î´³É¹¦²¶»ñ	
+		 /////////////////////é€šé“äºŒ///////////////////////////////
+			if((TIM5CH2_CAPTURE_STA&0X80)==0)//è¿˜æœªæˆåŠŸæ•è·	
 				{
-					if(tsr&0X01)//Òç³ö
+					if(tsr&0X01)//æº¢å‡º
 						{	     
-								if(TIM5CH2_CAPTURE_STA&0X40)//ÒÑ¾­²¶»ñµ½¸ßµçÆ½ÁË
+								if(TIM5CH2_CAPTURE_STA&0X40)//å·²ç»æ•è·åˆ°é«˜ç”µå¹³äº†
 								{
-									if((TIM5CH2_CAPTURE_STA&0X3F)==0X3F)//¸ßµçÆ½Ì«³¤ÁË
+									if((TIM5CH2_CAPTURE_STA&0X3F)==0X3F)//é«˜ç”µå¹³å¤ªé•¿äº†
 									{
-										TIM5CH2_CAPTURE_STA|=0X80;//±ê¼Ç³É¹¦²¶»ñÁËÒ»´Î
+										TIM5CH2_CAPTURE_STA|=0X80;//æ ‡è®°æˆåŠŸæ•è·äº†ä¸€æ¬¡
 										TIM5CH2_CAPTURE_VAL=0XFFFF;
 									}else TIM5CH2_CAPTURE_STA++;
 								}	 
 						}
-						if(tsr&0x04)//²¶»ñ2·¢Éú²¶»ñÊÂ¼ş
+						if(tsr&0x04)//æ•è·2å‘ç”Ÿæ•è·äº‹ä»¶
 					{	 	
-									if(TIM5CH2_CAPTURE_STA&0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ 		
+									if(TIM5CH2_CAPTURE_STA&0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿ 		
 									{	  	
-									TIM5CH2_CAPTURE_STA|=0X80;		//±ê¼Ç³É¹¦²¶»ñµ½Ò»´Î¸ßµçÆ½Âö¿í
-									TIM5CH2_CAPTURE_VAL=TIM5->CCR2;	//»ñÈ¡µ±Ç°µÄ²¶»ñÖµ.
-									TIM5->CCER&=~(1<<5);   //CC1P=0 ÉèÖÃÎªÉÏÉıÑØ²¶»ñ
-									}else  								//»¹Î´¿ªÊ¼,µÚÒ»´Î²¶»ñÉÏÉıÑØ
+									TIM5CH2_CAPTURE_STA|=0X80;		//æ ‡è®°æˆåŠŸæ•è·åˆ°ä¸€æ¬¡é«˜ç”µå¹³è„‰å®½
+									TIM5CH2_CAPTURE_VAL=TIM5->CCR2;	//è·å–å½“å‰çš„æ•è·å€¼.
+									TIM5->CCER&=~(1<<5);   //CC1P=0 è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·
+									}else  								//è¿˜æœªå¼€å§‹,ç¬¬ä¸€æ¬¡æ•è·ä¸Šå‡æ²¿
 									{	
-									TIM5CH2_CAPTURE_STA=0;//Çå¿Õ
+									TIM5CH2_CAPTURE_STA=0;//æ¸…ç©º
 									TIM5CH2_CAPTURE_VAL=0;
-									TIM5CH2_CAPTURE_STA|=0X40;//±ê¼Ç²¶»ñµ½ÁËÉÏÉıÑØ
-									TIM5->CNT=0;					//¼ÆÊıÆ÷Çå¿Õ
-									TIM5->CCER|=1<<5; 				//CC1P=1 ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+									TIM5CH2_CAPTURE_STA|=0X40;//æ ‡è®°æ•è·åˆ°äº†ä¸Šå‡æ²¿
+									TIM5->CNT=0;					//è®¡æ•°å™¨æ¸…ç©º
+									TIM5->CCER|=1<<5; 				//CC1P=1 è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 										}		    
 					 }			     	    					   
 		   } 
-			  /////////////////////Í¨µÀÈı///////////////////////////////
-			if((TIM5CH3_CAPTURE_STA&0X80)==0)//»¹Î´³É¹¦²¶»ñ	
+			  /////////////////////é€šé“ä¸‰///////////////////////////////
+			if((TIM5CH3_CAPTURE_STA&0X80)==0)//è¿˜æœªæˆåŠŸæ•è·	
 				{
-					if(tsr&0X01)//Òç³ö
+					if(tsr&0X01)//æº¢å‡º
 						{	     
-								if(TIM5CH3_CAPTURE_STA&0X40)//ÒÑ¾­²¶»ñµ½¸ßµçÆ½ÁË
+								if(TIM5CH3_CAPTURE_STA&0X40)//å·²ç»æ•è·åˆ°é«˜ç”µå¹³äº†
 								{
-									if((TIM5CH3_CAPTURE_STA&0X3F)==0X3F)//¸ßµçÆ½Ì«³¤ÁË
+									if((TIM5CH3_CAPTURE_STA&0X3F)==0X3F)//é«˜ç”µå¹³å¤ªé•¿äº†
 									{
-										TIM5CH3_CAPTURE_STA|=0X80;//±ê¼Ç³É¹¦²¶»ñÁËÒ»´Î
+										TIM5CH3_CAPTURE_STA|=0X80;//æ ‡è®°æˆåŠŸæ•è·äº†ä¸€æ¬¡
 										TIM5CH3_CAPTURE_VAL=0XFFFF;
 									}else TIM5CH3_CAPTURE_STA++;
 								}	 
 						}
-						if(tsr&0x08)//²¶»ñ3·¢Éú²¶»ñÊÂ¼ş
+						if(tsr&0x08)//æ•è·3å‘ç”Ÿæ•è·äº‹ä»¶
 					{	 	
-									if(TIM5CH3_CAPTURE_STA&0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ 		
+									if(TIM5CH3_CAPTURE_STA&0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿ 		
 									{	  	
-									TIM5CH3_CAPTURE_STA|=0X80;		//±ê¼Ç³É¹¦²¶»ñµ½Ò»´Î¸ßµçÆ½Âö¿í
-									TIM5CH3_CAPTURE_VAL=TIM5->CCR3;	//»ñÈ¡µ±Ç°µÄ²¶»ñÖµ.
-									TIM5->CCER&=~(1<<9);   //CC1P=0 ÉèÖÃÎªÉÏÉıÑØ²¶»ñ
-									}else  								//»¹Î´¿ªÊ¼,µÚÒ»´Î²¶»ñÉÏÉıÑØ
+									TIM5CH3_CAPTURE_STA|=0X80;		//æ ‡è®°æˆåŠŸæ•è·åˆ°ä¸€æ¬¡é«˜ç”µå¹³è„‰å®½
+									TIM5CH3_CAPTURE_VAL=TIM5->CCR3;	//è·å–å½“å‰çš„æ•è·å€¼.
+									TIM5->CCER&=~(1<<9);   //CC1P=0 è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·
+									}else  								//è¿˜æœªå¼€å§‹,ç¬¬ä¸€æ¬¡æ•è·ä¸Šå‡æ²¿
 									{	
-									TIM5CH3_CAPTURE_STA=0;//Çå¿Õ
+									TIM5CH3_CAPTURE_STA=0;//æ¸…ç©º
 									TIM5CH3_CAPTURE_VAL=0;
-									TIM5CH3_CAPTURE_STA|=0X40;//±ê¼Ç²¶»ñµ½ÁËÉÏÉıÑØ
-									TIM5->CNT=0;					//¼ÆÊıÆ÷Çå¿Õ
-									TIM5->CCER|=1<<9; 				//CC1P=1 ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+									TIM5CH3_CAPTURE_STA|=0X40;//æ ‡è®°æ•è·åˆ°äº†ä¸Šå‡æ²¿
+									TIM5->CNT=0;					//è®¡æ•°å™¨æ¸…ç©º
+									TIM5->CCER|=1<<9; 				//CC1P=1 è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 									}		    
 					 }			     	    					   
 		   } 
-	    /////////////////////Í¨µÀËÄ///////////////////////////////
-			if((TIM5CH4_CAPTURE_STA&0X80)==0)//»¹Î´³É¹¦²¶»ñ	
+	    /////////////////////é€šé“å››///////////////////////////////
+			if((TIM5CH4_CAPTURE_STA&0X80)==0)//è¿˜æœªæˆåŠŸæ•è·	
 				{
-					if(tsr&0X01)//Òç³ö
+					if(tsr&0X01)//æº¢å‡º
 						{	     
-								if(TIM5CH4_CAPTURE_STA&0X40)//ÒÑ¾­²¶»ñµ½¸ßµçÆ½ÁË
+								if(TIM5CH4_CAPTURE_STA&0X40)//å·²ç»æ•è·åˆ°é«˜ç”µå¹³äº†
 								{
-									if((TIM5CH4_CAPTURE_STA&0X3F)==0X3F)//¸ßµçÆ½Ì«³¤ÁË
+									if((TIM5CH4_CAPTURE_STA&0X3F)==0X3F)//é«˜ç”µå¹³å¤ªé•¿äº†
 									{
-										TIM5CH4_CAPTURE_STA|=0X80;//±ê¼Ç³É¹¦²¶»ñÁËÒ»´Î
+										TIM5CH4_CAPTURE_STA|=0X80;//æ ‡è®°æˆåŠŸæ•è·äº†ä¸€æ¬¡
 										TIM5CH4_CAPTURE_VAL=0XFFFF;
 									}else TIM5CH4_CAPTURE_STA++;
 								}	 
 						}
-						if(tsr&0x10)//²¶»ñ4·¢Éú²¶»ñÊÂ¼ş
+						if(tsr&0x10)//æ•è·4å‘ç”Ÿæ•è·äº‹ä»¶
 					{	 	
-									if(TIM5CH4_CAPTURE_STA&0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ 		
+									if(TIM5CH4_CAPTURE_STA&0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿ 		
 									{	  	
-									TIM5CH4_CAPTURE_STA|=0X80;		//±ê¼Ç³É¹¦²¶»ñµ½Ò»´Î¸ßµçÆ½Âö¿í
-									TIM5CH4_CAPTURE_VAL=TIM5->CCR4;	//»ñÈ¡µ±Ç°µÄ²¶»ñÖµ.
-									TIM5->CCER&=~(1<<13);   //CC1P=0 ÉèÖÃÎªÉÏÉıÑØ²¶»ñ
-									}else  								//»¹Î´¿ªÊ¼,µÚÒ»´Î²¶»ñÉÏÉıÑØ
+									TIM5CH4_CAPTURE_STA|=0X80;		//æ ‡è®°æˆåŠŸæ•è·åˆ°ä¸€æ¬¡é«˜ç”µå¹³è„‰å®½
+									TIM5CH4_CAPTURE_VAL=TIM5->CCR4;	//è·å–å½“å‰çš„æ•è·å€¼.
+									TIM5->CCER&=~(1<<13);   //CC1P=0 è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·
+									}else  								//è¿˜æœªå¼€å§‹,ç¬¬ä¸€æ¬¡æ•è·ä¸Šå‡æ²¿
 									{	
-									TIM5CH4_CAPTURE_STA=0;//Çå¿Õ
+									TIM5CH4_CAPTURE_STA=0;//æ¸…ç©º
 									TIM5CH4_CAPTURE_VAL=0;
-									TIM5CH4_CAPTURE_STA|=0X40;//±ê¼Ç²¶»ñµ½ÁËÉÏÉıÑØ
-									TIM5->CNT=0;					//¼ÆÊıÆ÷Çå¿Õ
-									TIM5->CCER|=1<<13; 				//CC1P=1 ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+									TIM5CH4_CAPTURE_STA|=0X40;//æ ‡è®°æ•è·åˆ°äº†ä¸Šå‡æ²¿
+									TIM5->CNT=0;					//è®¡æ•°å™¨æ¸…ç©º
+									TIM5->CCER|=1<<13; 				//CC1P=1 è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 									}		    
 					 }			     	    					   
 		   } 		 
-			 TIM5->SR=0;//Çå³ıÖĞ¶Ï±êÖ¾Î» 	     
+			 TIM5->SR=0;//æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½ 	     
 }
 
 
 
-u8 TIM3CH1_CAPTURE_STA = 0;	//Í¨µÀ1ÊäÈë²¶»ñ±êÖ¾£¬¸ßÁ½Î»×ö²¶»ñ±êÖ¾£¬µÍ6Î»×öÒç³ö±êÖ¾		
+u8 TIM3CH1_CAPTURE_STA = 0;	//é€šé“1è¾“å…¥æ•è·æ ‡å¿—ï¼Œé«˜ä¸¤ä½åšæ•è·æ ‡å¿—ï¼Œä½6ä½åšæº¢å‡ºæ ‡å¿—		
 u16 TIM3CH1_CAPTURE_UPVAL;
 u16 TIM3CH1_CAPTURE_DOWNVAL;
 
-u8 TIM3CH2_CAPTURE_STA = 0;	//Í¨µÀ2ÊäÈë²¶»ñ±êÖ¾£¬¸ßÁ½Î»×ö²¶»ñ±êÖ¾£¬µÍ6Î»×öÒç³ö±êÖ¾		
+u8 TIM3CH2_CAPTURE_STA = 0;	//é€šé“2è¾“å…¥æ•è·æ ‡å¿—ï¼Œé«˜ä¸¤ä½åšæ•è·æ ‡å¿—ï¼Œä½6ä½åšæº¢å‡ºæ ‡å¿—		
 u16 TIM3CH2_CAPTURE_UPVAL;
 u16 TIM3CH2_CAPTURE_DOWNVAL;
 
-u8 TIM3CH3_CAPTURE_STA = 0;	//Í¨µÀ3ÊäÈë²¶»ñ±êÖ¾£¬¸ßÁ½Î»×ö²¶»ñ±êÖ¾£¬µÍ6Î»×öÒç³ö±êÖ¾		
+u8 TIM3CH3_CAPTURE_STA = 0;	//é€šé“3è¾“å…¥æ•è·æ ‡å¿—ï¼Œé«˜ä¸¤ä½åšæ•è·æ ‡å¿—ï¼Œä½6ä½åšæº¢å‡ºæ ‡å¿—		
 u16 TIM3CH3_CAPTURE_UPVAL;
 u16 TIM3CH3_CAPTURE_DOWNVAL;
 
-u8 TIM3CH4_CAPTURE_STA = 0;	//Í¨µÀ4ÊäÈë²¶»ñ±êÖ¾£¬¸ßÁ½Î»×ö²¶»ñ±êÖ¾£¬µÍ6Î»×öÒç³ö±êÖ¾		
+u8 TIM3CH4_CAPTURE_STA = 0;	//é€šé“4è¾“å…¥æ•è·æ ‡å¿—ï¼Œé«˜ä¸¤ä½åšæ•è·æ ‡å¿—ï¼Œä½6ä½åšæº¢å‡ºæ ‡å¿—		
 u16 TIM3CH4_CAPTURE_UPVAL;
 u16 TIM3CH4_CAPTURE_DOWNVAL;
 
@@ -298,12 +298,12 @@ u32 TIM3_T1;
 u32 TIM3_T2;
 u32 TIM3_T3;
 u32 TIM3_T4;
-//¶¨Ê±Æ÷2ÊäÈë²¶»ñÅäÖÃ
-int pwmout1, pwmout2, pwmout3, pwmout4; 				//Êä³öÕ¼¿Õ±È
+//å®šæ—¶å™¨2è¾“å…¥æ•è·é…ç½®
+int pwmout1, pwmout2, pwmout3, pwmout4; 				//è¾“å‡ºå ç©ºæ¯”
 /**************************************************************************
-º¯Êı¹¦ÄÜ£ºº½Ä£Ò£¿Ø³õÊ¼»¯º¯Êı
-Èë¿Ú²ÎÊı£ºarr£º×Ô¶¯ÖØ×°Öµ  psc£ºÊ±ÖÓÔ¤·ÖÆµÊı 
-·µ»Ø  Öµ£ºÎŞ
+å‡½æ•°åŠŸèƒ½ï¼šèˆªæ¨¡é¥æ§åˆå§‹åŒ–å‡½æ•°
+å…¥å£å‚æ•°ï¼šarrï¼šè‡ªåŠ¨é‡è£…å€¼  pscï¼šæ—¶é’Ÿé¢„åˆ†é¢‘æ•° 
+è¿”å›  å€¼ï¼šæ— 
 **************************************************************************/
 void TIM3_Cap_Init(u16 arr, u16 psc)
 {
@@ -312,84 +312,84 @@ void TIM3_Cap_Init(u16 arr, u16 psc)
 	NVIC_InitTypeDef NVIC_InitStructure;
   TIM_ICInitTypeDef TIM_ICInitStructure;
 	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	//Ê¹ÄÜTIM3Ê±ÖÓ
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB, ENABLE);  //Ê¹ÄÜGPIOA BÊ±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	//ä½¿èƒ½TIM3æ—¶é’Ÿ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB, ENABLE);  //ä½¿èƒ½GPIOA Bæ—¶é’Ÿ
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 ; 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //ÊäÈë 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //è¾“å…¥ 
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_6 | GPIO_Pin_7);//PA6 7  ÊäÈë   ÏÂÀ­
+	GPIO_ResetBits(GPIOA, GPIO_Pin_6 | GPIO_Pin_7);//PA6 7  è¾“å…¥   ä¸‹æ‹‰
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0| GPIO_Pin_1 ; 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //ÊäÈë 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //è¾“å…¥ 
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	GPIO_ResetBits(GPIOB, GPIO_Pin_0 | GPIO_Pin_1);//PA0 1  ÊäÈë   ÏÂÀ­
-	//³õÊ¼»¯¶¨Ê±Æ÷ TIM3	 
-	TIM_TimeBaseStructure.TIM_Period = arr; //Éè¶¨¼ÆÊıÆ÷×Ô¶¯ÖØ×°Öµ 
-	TIM_TimeBaseStructure.TIM_Prescaler = psc; 	//Ô¤·ÖÆµÆ÷ 
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //ÉèÖÃÊ±ÖÓ·Ö¸î:TDTS = Tck_tim
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIMÏòÉÏ¼ÆÊıÄ£Ê½
-	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure); //¸ù¾İTIM_TimeBaseInitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯TIMxµÄÊ±¼ä»ùÊıµ¥Î»
+	GPIO_ResetBits(GPIOB, GPIO_Pin_0 | GPIO_Pin_1);//PA0 1  è¾“å…¥   ä¸‹æ‹‰
+	//åˆå§‹åŒ–å®šæ—¶å™¨ TIM3	 
+	TIM_TimeBaseStructure.TIM_Period = arr; //è®¾å®šè®¡æ•°å™¨è‡ªåŠ¨é‡è£…å€¼ 
+	TIM_TimeBaseStructure.TIM_Prescaler = psc; 	//é¢„åˆ†é¢‘å™¨ 
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //è®¾ç½®æ—¶é’Ÿåˆ†å‰²:TDTS = Tck_tim
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIMå‘ä¸Šè®¡æ•°æ¨¡å¼
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure); //æ ¹æ®TIM_TimeBaseInitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–TIMxçš„æ—¶é—´åŸºæ•°å•ä½
 
-	//³õÊ¼»¯TIM3ÊäÈë²¶»ñ²ÎÊı Í¨µÀ1
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1; //CC1S=01 	Ñ¡ÔñÊäÈë¶Ë 
-	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+	//åˆå§‹åŒ–TIM3è¾“å…¥æ•è·å‚æ•° é€šé“1
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1; //CC1S=01 	é€‰æ‹©è¾“å…¥ç«¯ 
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; //
-	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-	TIM_ICInitStructure.TIM_ICFilter = 0x0F;	  //IC1F=0000 ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+	TIM_ICInitStructure.TIM_ICFilter = 0x0F;	  //IC1F=0000 é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
 	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
-	//³õÊ¼»¯TIM3ÊäÈë²¶»ñ²ÎÊı Í¨µÀ2
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_2; //CC1S=01 	Ñ¡ÔñÊäÈë¶Ë  
-	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+	//åˆå§‹åŒ–TIM3è¾“å…¥æ•è·å‚æ•° é€šé“2
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_2; //CC1S=01 	é€‰æ‹©è¾“å…¥ç«¯  
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; //
-	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-	TIM_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+	TIM_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
 	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
-	//³õÊ¼»¯TIM3ÊäÈë²¶»ñ²ÎÊı Í¨µÀ3
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_3; //CC1S=01 	Ñ¡ÔñÊäÈë¶Ë  
-	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+	//åˆå§‹åŒ–TIM3è¾“å…¥æ•è·å‚æ•° é€šé“3
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_3; //CC1S=01 	é€‰æ‹©è¾“å…¥ç«¯  
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; //
-	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-	TIM_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+	TIM_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
 	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
-	//³õÊ¼»¯TIM3ÊäÈë²¶»ñ²ÎÊı Í¨µÀ4
-	TIM_ICInitStructure.TIM_Channel = TIM_Channel_4; //CC1S=01 	Ñ¡ÔñÊäÈë¶Ë 
-	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ÉÏÉıÑØ²¶»ñ
+	//åˆå§‹åŒ–TIM3è¾“å…¥æ•è·å‚æ•° é€šé“4
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_4; //CC1S=01 	é€‰æ‹©è¾“å…¥ç«¯ 
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	//ä¸Šå‡æ²¿æ•è·
 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; //
-	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //ÅäÖÃÊäÈë·ÖÆµ,²»·ÖÆµ 
-	TIM_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 ÅäÖÃÊäÈëÂË²¨Æ÷ ²»ÂË²¨
+	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //é…ç½®è¾“å…¥åˆ†é¢‘,ä¸åˆ†é¢‘ 
+	TIM_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 é…ç½®è¾“å…¥æ»¤æ³¢å™¨ ä¸æ»¤æ³¢
 	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
-	//ÖĞ¶Ï·Ö×é³õÊ¼»¯
-	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;  //TIM3ÖĞ¶Ï
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //ÏÈÕ¼ÓÅÏÈ¼¶0¼¶
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //´ÓÓÅÏÈ¼¶0¼¶
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQÍ¨µÀ±»Ê¹ÄÜ
-	NVIC_Init(&NVIC_InitStructure);   //¸ù¾İNVIC_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯ÍâÉèNVIC¼Ä´æÆ÷ 
-	TIM_ITConfig(TIM3, TIM_IT_CC1|TIM_IT_CC2|TIM_IT_CC3|TIM_IT_CC4,	ENABLE);   //²»ÔÊĞí¸üĞÂÖĞ¶Ï£¬ÔÊĞíCC1IE,CC2IE,CC3IE,CC4IE²¶»ñÖĞ¶Ï	
-	TIM_Cmd(TIM3, ENABLE); 		//Ê¹ÄÜ¶¨Ê±Æ÷
+	//ä¸­æ–­åˆ†ç»„åˆå§‹åŒ–
+	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;  //TIM3ä¸­æ–­
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //å…ˆå ä¼˜å…ˆçº§0çº§
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //ä»ä¼˜å…ˆçº§0çº§
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQé€šé“è¢«ä½¿èƒ½
+	NVIC_Init(&NVIC_InitStructure);   //æ ¹æ®NVIC_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–å¤–è®¾NVICå¯„å­˜å™¨ 
+	TIM_ITConfig(TIM3, TIM_IT_CC1|TIM_IT_CC2|TIM_IT_CC3|TIM_IT_CC4,	ENABLE);   //ä¸å…è®¸æ›´æ–°ä¸­æ–­ï¼Œå…è®¸CC1IE,CC2IE,CC3IE,CC4IEæ•è·ä¸­æ–­	
+	TIM_Cmd(TIM3, ENABLE); 		//ä½¿èƒ½å®šæ—¶å™¨
 
 }
 
 /**************************************************************************
-º¯Êı¹¦ÄÜ£ºº½Ä£Ò£¿Ø½ÓÊÕÖĞ¶Ï
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£ºÎŞ
+å‡½æ•°åŠŸèƒ½ï¼šèˆªæ¨¡é¥æ§æ¥æ”¶ä¸­æ–­
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæ— 
 **************************************************************************/
 void TIM3_IRQHandler(void)
 {
-	  /////////////////////Í¨µÀÒ»///////////////////////////////
-	if ((TIM3CH1_CAPTURE_STA & 0X80) == 0) 		//»¹Î´³É¹¦²¶»ñ	
+	  /////////////////////é€šé“ä¸€///////////////////////////////
+	if ((TIM3CH1_CAPTURE_STA & 0X80) == 0) 		//è¿˜æœªæˆåŠŸæ•è·	
 	{
-		if (TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET) 		//²¶»ñ1·¢Éú²¶»ñÊÂ¼ş
+		if (TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET) 		//æ•è·1å‘ç”Ÿæ•è·äº‹ä»¶
 		{
-			TIM_ClearITPendingBit(TIM3, TIM_IT_CC1); 		//Çå³ıÖĞ¶Ï±êÖ¾Î»
-			if (TIM3CH1_CAPTURE_STA & 0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ
+			TIM_ClearITPendingBit(TIM3, TIM_IT_CC1); 		//æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+			if (TIM3CH1_CAPTURE_STA & 0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿
 			{
-				TIM3CH1_CAPTURE_DOWNVAL = TIM_GetCapture1(TIM3);//¼ÇÂ¼ÏÂ´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+				TIM3CH1_CAPTURE_DOWNVAL = TIM_GetCapture1(TIM3);//è®°å½•ä¸‹æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 				if (TIM3CH1_CAPTURE_DOWNVAL < TIM3CH1_CAPTURE_UPVAL)
 				{
 					TIM3_T1 = 65535;
@@ -397,28 +397,28 @@ void TIM3_IRQHandler(void)
 				else
 					TIM3_T1 = 0;
 				Remoter_Ch1 = TIM3CH1_CAPTURE_DOWNVAL - TIM3CH1_CAPTURE_UPVAL
-						+ TIM3_T1;		//µÃµ½×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				pwmout1 = Remoter_Ch1;		//×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				TIM3CH1_CAPTURE_STA = 0;		//²¶»ñ±êÖ¾Î»ÇåÁã
-				TIM_OC1PolarityConfig(TIM3, TIM_ICPolarity_Rising); //ÉèÖÃÎªÉÏÉıÑØ²¶»ñ		  
+						+ TIM3_T1;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				pwmout1 = Remoter_Ch1;		//æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				TIM3CH1_CAPTURE_STA = 0;		//æ•è·æ ‡å¿—ä½æ¸…é›¶
+				TIM_OC1PolarityConfig(TIM3, TIM_ICPolarity_Rising); //è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·		  
 			}
-			else //·¢Éú²¶»ñÊ±¼äµ«²»ÊÇÏÂ½µÑØ£¬µÚÒ»´Î²¶»ñµ½ÉÏÉıÑØ£¬¼ÇÂ¼´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+			else //å‘ç”Ÿæ•è·æ—¶é—´ä½†ä¸æ˜¯ä¸‹é™æ²¿ï¼Œç¬¬ä¸€æ¬¡æ•è·åˆ°ä¸Šå‡æ²¿ï¼Œè®°å½•æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 			{
-				TIM3CH1_CAPTURE_UPVAL = TIM_GetCapture1(TIM3);		//»ñÈ¡ÉÏÉıÑØÊı¾İ
-				TIM3CH1_CAPTURE_STA |= 0X40;		//±ê¼ÇÒÑ²¶»ñµ½ÉÏÉıÑØ
-				TIM_OC1PolarityConfig(TIM3, TIM_ICPolarity_Falling);//ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+				TIM3CH1_CAPTURE_UPVAL = TIM_GetCapture1(TIM3);		//è·å–ä¸Šå‡æ²¿æ•°æ®
+				TIM3CH1_CAPTURE_STA |= 0X40;		//æ ‡è®°å·²æ•è·åˆ°ä¸Šå‡æ²¿
+				TIM_OC1PolarityConfig(TIM3, TIM_ICPolarity_Falling);//è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 			}
 		}
 	}
-  /////////////////////Í¨µÀ¶ş///////////////////////////////
-	if ((TIM3CH2_CAPTURE_STA & 0X80) == 0)		//»¹Î´³É¹¦²¶»ñ	
+  /////////////////////é€šé“äºŒ///////////////////////////////
+	if ((TIM3CH2_CAPTURE_STA & 0X80) == 0)		//è¿˜æœªæˆåŠŸæ•è·	
 	{
-		if (TIM_GetITStatus(TIM3, TIM_IT_CC2) != RESET)		//²¶»ñ2·¢Éú²¶»ñÊÂ¼ş
+		if (TIM_GetITStatus(TIM3, TIM_IT_CC2) != RESET)		//æ•è·2å‘ç”Ÿæ•è·äº‹ä»¶
 		{
-			TIM_ClearITPendingBit(TIM3, TIM_IT_CC2);		//Çå³ıÖĞ¶Ï±êÖ¾Î»
-			if (TIM3CH2_CAPTURE_STA & 0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ
+			TIM_ClearITPendingBit(TIM3, TIM_IT_CC2);		//æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+			if (TIM3CH2_CAPTURE_STA & 0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿
 			{
-				TIM3CH2_CAPTURE_DOWNVAL = TIM_GetCapture2(TIM3);//¼ÇÂ¼ÏÂ´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+				TIM3CH2_CAPTURE_DOWNVAL = TIM_GetCapture2(TIM3);//è®°å½•ä¸‹æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 				if (TIM3CH2_CAPTURE_DOWNVAL < TIM3CH2_CAPTURE_UPVAL)
 				{
 					TIM3_T2 = 65535;
@@ -426,28 +426,28 @@ void TIM3_IRQHandler(void)
 				else
 					TIM3_T2 = 0;
 				Remoter_Ch2 = TIM3CH2_CAPTURE_DOWNVAL - TIM3CH2_CAPTURE_UPVAL
-						+ TIM3_T2;		//µÃµ½×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				pwmout2 = Remoter_Ch2;		//×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				TIM3CH2_CAPTURE_STA = 0;		//²¶»ñ±êÖ¾Î»ÇåÁã
-				TIM_OC2PolarityConfig(TIM3, TIM_ICPolarity_Rising); //ÉèÖÃÎªÉÏÉıÑØ²¶»ñ		  
+						+ TIM3_T2;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				pwmout2 = Remoter_Ch2;		//æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				TIM3CH2_CAPTURE_STA = 0;		//æ•è·æ ‡å¿—ä½æ¸…é›¶
+				TIM_OC2PolarityConfig(TIM3, TIM_ICPolarity_Rising); //è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·		  
 			}
-			else //·¢Éú²¶»ñÊ±¼äµ«²»ÊÇÏÂ½µÑØ£¬µÚÒ»´Î²¶»ñµ½ÉÏÉıÑØ£¬¼ÇÂ¼´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+			else //å‘ç”Ÿæ•è·æ—¶é—´ä½†ä¸æ˜¯ä¸‹é™æ²¿ï¼Œç¬¬ä¸€æ¬¡æ•è·åˆ°ä¸Šå‡æ²¿ï¼Œè®°å½•æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 			{
-				TIM3CH2_CAPTURE_UPVAL = TIM_GetCapture2(TIM3);		//»ñÈ¡ÉÏÉıÑØÊı¾İ
-				TIM3CH2_CAPTURE_STA |= 0X40;		//±ê¼ÇÒÑ²¶»ñµ½ÉÏÉıÑØ
-				TIM_OC2PolarityConfig(TIM3, TIM_ICPolarity_Falling);//ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+				TIM3CH2_CAPTURE_UPVAL = TIM_GetCapture2(TIM3);		//è·å–ä¸Šå‡æ²¿æ•°æ®
+				TIM3CH2_CAPTURE_STA |= 0X40;		//æ ‡è®°å·²æ•è·åˆ°ä¸Šå‡æ²¿
+				TIM_OC2PolarityConfig(TIM3, TIM_ICPolarity_Falling);//è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 			}
 		}
 	}
-  /////////////////////Í¨µÀÈı///////////////////////////////
-	if ((TIM3CH3_CAPTURE_STA & 0X80) == 0)		//»¹Î´³É¹¦²¶»ñ	
+  /////////////////////é€šé“ä¸‰///////////////////////////////
+	if ((TIM3CH3_CAPTURE_STA & 0X80) == 0)		//è¿˜æœªæˆåŠŸæ•è·	
 	{
-		if (TIM_GetITStatus(TIM3, TIM_IT_CC3) != RESET)		//²¶»ñ3·¢Éú²¶»ñÊÂ¼ş
+		if (TIM_GetITStatus(TIM3, TIM_IT_CC3) != RESET)		//æ•è·3å‘ç”Ÿæ•è·äº‹ä»¶
 		{
-			TIM_ClearITPendingBit(TIM3, TIM_IT_CC3);		//Çå³ıÖĞ¶Ï±êÖ¾Î»
-			if (TIM3CH3_CAPTURE_STA & 0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ
+			TIM_ClearITPendingBit(TIM3, TIM_IT_CC3);		//æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+			if (TIM3CH3_CAPTURE_STA & 0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿
 			{
-				TIM3CH3_CAPTURE_DOWNVAL = TIM_GetCapture3(TIM3);//¼ÇÂ¼ÏÂ´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+				TIM3CH3_CAPTURE_DOWNVAL = TIM_GetCapture3(TIM3);//è®°å½•ä¸‹æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 				if (TIM3CH3_CAPTURE_DOWNVAL < TIM3CH3_CAPTURE_UPVAL)
 				{
 					TIM3_T3 = 65535;
@@ -455,28 +455,28 @@ void TIM3_IRQHandler(void)
 				else
 					TIM3_T3 = 0;
 				Remoter_Ch3 = TIM3CH3_CAPTURE_DOWNVAL - TIM3CH3_CAPTURE_UPVAL
-						+ TIM3_T3;		//µÃµ½×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				pwmout3 = Remoter_Ch3;		//×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				TIM3CH3_CAPTURE_STA = 0;		//²¶»ñ±êÖ¾Î»ÇåÁã
-				TIM_OC3PolarityConfig(TIM3, TIM_ICPolarity_Rising); //ÉèÖÃÎªÉÏÉıÑØ²¶»ñ		  
+						+ TIM3_T3;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				pwmout3 = Remoter_Ch3;		//æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				TIM3CH3_CAPTURE_STA = 0;		//æ•è·æ ‡å¿—ä½æ¸…é›¶
+				TIM_OC3PolarityConfig(TIM3, TIM_ICPolarity_Rising); //è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·		  
 			}
-			else //·¢Éú²¶»ñÊ±¼äµ«²»ÊÇÏÂ½µÑØ£¬µÚÒ»´Î²¶»ñµ½ÉÏÉıÑØ£¬¼ÇÂ¼´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+			else //å‘ç”Ÿæ•è·æ—¶é—´ä½†ä¸æ˜¯ä¸‹é™æ²¿ï¼Œç¬¬ä¸€æ¬¡æ•è·åˆ°ä¸Šå‡æ²¿ï¼Œè®°å½•æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 			{
-				TIM3CH3_CAPTURE_UPVAL = TIM_GetCapture3(TIM3);		//»ñÈ¡ÉÏÉıÑØÊı¾İ
-				TIM3CH3_CAPTURE_STA |= 0X40;		//±ê¼ÇÒÑ²¶»ñµ½ÉÏÉıÑØ
-				TIM_OC3PolarityConfig(TIM3, TIM_ICPolarity_Falling);//ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+				TIM3CH3_CAPTURE_UPVAL = TIM_GetCapture3(TIM3);		//è·å–ä¸Šå‡æ²¿æ•°æ®
+				TIM3CH3_CAPTURE_STA |= 0X40;		//æ ‡è®°å·²æ•è·åˆ°ä¸Šå‡æ²¿
+				TIM_OC3PolarityConfig(TIM3, TIM_ICPolarity_Falling);//è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 			}
 		}
 	}
-  /////////////////////Í¨µÀËÄ///////////////////////////////
-	if ((TIM3CH4_CAPTURE_STA & 0X80) == 0)		//»¹Î´³É¹¦²¶»ñ	
+  /////////////////////é€šé“å››///////////////////////////////
+	if ((TIM3CH4_CAPTURE_STA & 0X80) == 0)		//è¿˜æœªæˆåŠŸæ•è·	
 	{
-		if (TIM_GetITStatus(TIM3, TIM_IT_CC4) != RESET)		//²¶»ñ4·¢Éú²¶»ñÊÂ¼ş
+		if (TIM_GetITStatus(TIM3, TIM_IT_CC4) != RESET)		//æ•è·4å‘ç”Ÿæ•è·äº‹ä»¶
 		{
-			TIM_ClearITPendingBit(TIM3, TIM_IT_CC4);		//Çå³ıÖĞ¶Ï±êÖ¾Î»
-			if (TIM3CH4_CAPTURE_STA & 0X40)		//²¶»ñµ½Ò»¸öÏÂ½µÑØ
+			TIM_ClearITPendingBit(TIM3, TIM_IT_CC4);		//æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+			if (TIM3CH4_CAPTURE_STA & 0X40)		//æ•è·åˆ°ä¸€ä¸ªä¸‹é™æ²¿
 			{
-				TIM3CH4_CAPTURE_DOWNVAL = TIM_GetCapture4(TIM3);//¼ÇÂ¼ÏÂ´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+				TIM3CH4_CAPTURE_DOWNVAL = TIM_GetCapture4(TIM3);//è®°å½•ä¸‹æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 				if (TIM3CH4_CAPTURE_DOWNVAL < TIM3CH4_CAPTURE_UPVAL)
 				{
 					TIM3_T4 = 65535;
@@ -484,16 +484,16 @@ void TIM3_IRQHandler(void)
 				else
 					TIM3_T4 = 0;
 				Remoter_Ch4 = TIM3CH4_CAPTURE_DOWNVAL - TIM3CH4_CAPTURE_UPVAL
-						+ TIM3_T4;		//µÃµ½×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				pwmout4 = Remoter_Ch4;		//×ÜµÄ¸ßµçÆ½µÄÊ±¼ä
-				TIM3CH4_CAPTURE_STA = 0;		//²¶»ñ±êÖ¾Î»ÇåÁã
-				TIM_OC4PolarityConfig(TIM3, TIM_ICPolarity_Rising); //ÉèÖÃÎªÉÏÉıÑØ²¶»ñ		  
+						+ TIM3_T4;		//å¾—åˆ°æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				pwmout4 = Remoter_Ch4;		//æ€»çš„é«˜ç”µå¹³çš„æ—¶é—´
+				TIM3CH4_CAPTURE_STA = 0;		//æ•è·æ ‡å¿—ä½æ¸…é›¶
+				TIM_OC4PolarityConfig(TIM3, TIM_ICPolarity_Rising); //è®¾ç½®ä¸ºä¸Šå‡æ²¿æ•è·		  
 			}
-			else //·¢Éú²¶»ñÊ±¼äµ«²»ÊÇÏÂ½µÑØ£¬µÚÒ»´Î²¶»ñµ½ÉÏÉıÑØ£¬¼ÇÂ¼´ËÊ±µÄ¶¨Ê±Æ÷¼ÆÊıÖµ
+			else //å‘ç”Ÿæ•è·æ—¶é—´ä½†ä¸æ˜¯ä¸‹é™æ²¿ï¼Œç¬¬ä¸€æ¬¡æ•è·åˆ°ä¸Šå‡æ²¿ï¼Œè®°å½•æ­¤æ—¶çš„å®šæ—¶å™¨è®¡æ•°å€¼
 			{
-				TIM3CH4_CAPTURE_UPVAL = TIM_GetCapture4(TIM3);		//»ñÈ¡ÉÏÉıÑØÊı¾İ
-				TIM3CH4_CAPTURE_STA |= 0X40;		//±ê¼ÇÒÑ²¶»ñµ½ÉÏÉıÑØ
-				TIM_OC4PolarityConfig(TIM3, TIM_ICPolarity_Falling);//ÉèÖÃÎªÏÂ½µÑØ²¶»ñ
+				TIM3CH4_CAPTURE_UPVAL = TIM_GetCapture4(TIM3);		//è·å–ä¸Šå‡æ²¿æ•°æ®
+				TIM3CH4_CAPTURE_STA |= 0X40;		//æ ‡è®°å·²æ•è·åˆ°ä¸Šå‡æ²¿
+				TIM_OC4PolarityConfig(TIM3, TIM_ICPolarity_Falling);//è®¾ç½®ä¸ºä¸‹é™æ²¿æ•è·
 			}
 		}
 	}

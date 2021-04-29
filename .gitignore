@@ -1,1 +1,10 @@
 OBJ/
+*~
+*.log
+*.log*
+*.bak
+*.uvgui*
+
+
+USER/.vscode/c_cpp_properties.json
+USER/*.map

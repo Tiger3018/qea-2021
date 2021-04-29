@@ -1,31 +1,31 @@
 #include "key.h"
   /**************************************************************************
-×÷Õß£ºÆ½ºâĞ¡³µÖ®¼Ò
-ÎÒµÄÌÔ±¦Ğ¡µê£ºhttp://shop114407458.taobao.com/
+ä½œè€…ï¼šå¹³è¡¡å°è½¦ä¹‹å®¶
+æˆ‘çš„æ·˜å®å°åº—ï¼šhttp://shop114407458.taobao.com/
 **************************************************************************/
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º°´¼ü³õÊ¼»¯
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£ºÎŞ 
+å‡½æ•°åŠŸèƒ½ï¼šæŒ‰é”®åˆå§‹åŒ–
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæ—  
 **************************************************************************/
 void KEY_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); //Ê¹ÄÜ¶Ë¿ÚÊ±ÖÓ
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14; //¶Ë¿ÚÅäÖÃ
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;         //ÉÏÀ­ÊäÈë
-  GPIO_Init(GPIOB, &GPIO_InitStructure);					      //¸ù¾İÉè¶¨²ÎÊı³õÊ¼»¯GPIO
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); //ä½¿èƒ½ç«¯å£æ—¶é’Ÿ
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14; //ç«¯å£é…ç½®
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;         //ä¸Šæ‹‰è¾“å…¥
+  GPIO_Init(GPIOB, &GPIO_InitStructure);					      //æ ¹æ®è®¾å®šå‚æ•°åˆå§‹åŒ–GPIO
 } 
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º°´¼üÉ¨Ãè
-Èë¿Ú²ÎÊı£ºË«»÷µÈ´ıÊ±¼ä
-·µ»Ø  Öµ£º°´¼ü×´Ì¬ 0£ºÎŞ¶¯×÷ 1£ºµ¥»÷ 2£ºË«»÷ 
+å‡½æ•°åŠŸèƒ½ï¼šæŒ‰é”®æ‰«æ
+å…¥å£å‚æ•°ï¼šåŒå‡»ç­‰å¾…æ—¶é—´
+è¿”å›  å€¼ï¼šæŒ‰é”®çŠ¶æ€ 0ï¼šæ— åŠ¨ä½œ 1ï¼šå•å‡» 2ï¼šåŒå‡» 
 **************************************************************************/
 u8 click_N_Double (u8 time)
 {
 		static	u8 flag_key,count_key,double_key;	
 		static	u16 count_single,Forever_count;
-	  if(KEY==0)  Forever_count++;   //³¤°´±êÖ¾Î»Î´ÖÃ1
+	  if(KEY==0)  Forever_count++;   //é•¿æŒ‰æ ‡å¿—ä½æœªç½®1
      else        Forever_count=0;
 		if(0==KEY&&0==flag_key)		flag_key=1;	
 	  if(0==count_key)
@@ -39,7 +39,7 @@ u8 click_N_Double (u8 time)
 				{
 					double_key=0;
 					count_single=0;
-					return 2;//Ë«»÷Ö´ĞĞµÄÖ¸Áî
+					return 2;//åŒå‡»æ‰§è¡Œçš„æŒ‡ä»¤
 				}
 		}
 		if(1==KEY)			flag_key=0,count_key=0;
@@ -51,7 +51,7 @@ u8 click_N_Double (u8 time)
 			{
 			double_key=0;
 			count_single=0;	
-			return 1;//µ¥»÷Ö´ĞĞµÄÖ¸Áî
+			return 1;//å•å‡»æ‰§è¡Œçš„æŒ‡ä»¤
 			}
 			if(Forever_count>time)
 			{
@@ -62,30 +62,30 @@ u8 click_N_Double (u8 time)
 		return 0;
 }
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º°´¼üÉ¨Ãè
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£º°´¼ü×´Ì¬ 0£ºÎŞ¶¯×÷ 1£ºµ¥»÷ 
+å‡½æ•°åŠŸèƒ½ï¼šæŒ‰é”®æ‰«æ
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæŒ‰é”®çŠ¶æ€ 0ï¼šæ— åŠ¨ä½œ 1ï¼šå•å‡» 
 **************************************************************************/
 u8 click(void)
 {
-			static u8 flag_key=1;//°´¼ü°´ËÉ¿ª±êÖ¾
+			static u8 flag_key=1;//æŒ‰é”®æŒ‰æ¾å¼€æ ‡å¿—
 			if(flag_key&&KEY==0)
 			{
 			flag_key=0;
-			return 1;	// °´¼ü°´ÏÂ
+			return 1;	// æŒ‰é”®æŒ‰ä¸‹
 			}
 			else if(1==KEY)			flag_key=1;
-			return 0;//ÎŞ°´¼ü°´ÏÂ
+			return 0;//æ— æŒ‰é”®æŒ‰ä¸‹
 }
 /**************************************************************************
-º¯Êı¹¦ÄÜ£º³¤°´¼ì²â
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£º°´¼ü×´Ì¬ 0£ºÎŞ¶¯×÷ 1£º³¤°´2s
+å‡½æ•°åŠŸèƒ½ï¼šé•¿æŒ‰æ£€æµ‹
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæŒ‰é”®çŠ¶æ€ 0ï¼šæ— åŠ¨ä½œ 1ï¼šé•¿æŒ‰2s
 **************************************************************************/
 u8 Long_Press(void)
 {
 			static u16 Long_Press_count,Long_Press;
-	    if(Long_Press==0&&KEY==0)  Long_Press_count++;   //³¤°´±êÖ¾Î»Î´ÖÃ1
+	    if(Long_Press==0&&KEY==0)  Long_Press_count++;   //é•¿æŒ‰æ ‡å¿—ä½æœªç½®1
       else                       Long_Press_count=0; 
 		  if(Long_Press_count>200)		
 			{
@@ -93,16 +93,16 @@ u8 Long_Press(void)
 				Long_Press_count=0;
 				return 1;
 			}				
-			 if(Long_Press==1)     //³¤°´±êÖ¾Î»ÖÃ1
+			 if(Long_Press==1)     //é•¿æŒ‰æ ‡å¿—ä½ç½®1
 			{
 				  Long_Press=0;
 			}
 			return 0;
 }
 /**************************************************************************
-º¯Êı¹¦ÄÜ£ºÑ¡ÔñÔËĞĞµÄÄ£Ê½
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»Ø  Öµ£ºÎŞ
+å‡½æ•°åŠŸèƒ½ï¼šé€‰æ‹©è¿è¡Œçš„æ¨¡å¼
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›  å€¼ï¼šæ— 
 **************************************************************************/
 u8  select(void)
 {
@@ -110,18 +110,18 @@ u8  select(void)
 	  static u8 flag=1;
 	  int count;
 	  static int Last_Encoder_Temp,Start_Count;
-	  oled_show_once();  //OLEDÏÔÊ¾
+	  oled_show_once();  //OLEDæ˜¾ç¤º
 		Encoder_Temp=abs((short)TIM4->CNT);
     count=Encoder_Temp;
 	  if(abs(Encoder_Temp-Last_Encoder_Temp)==0)Start_Count++; else Start_Count=0;
-	  if(count<=Angle)								       Flag_Way=4,Flag_Stop=1;  //ÎÒÃÇµÄÄ£Ê½
-		else if(count>Angle&&count<=2*Angle)	 Flag_Way=0,Flag_Stop=0;  //APPÒ£¿ØÄ£Ê½
-		else if(count>2*Angle&&count<=3*Angle) Flag_Way=1,Flag_Stop=1;	//PS2Ò£¿ØÄ£Ê½
-		else if(count>3*Angle&&count<=4*Angle) Flag_Way=2,Flag_Stop=1;	//CCDÑ²ÏßÄ£Ê½
-		else if(count>4*Angle&&count<=5*Angle) Flag_Way=3,Flag_Stop=1;	//µç´ÅÑ²ÏßÄ£Ê½
+	  if(count<=Angle)								       Flag_Way=4,Flag_Stop=1;  //æˆ‘ä»¬çš„æ¨¡å¼
+		else if(count>Angle&&count<=2*Angle)	 Flag_Way=0,Flag_Stop=0;  //APPé¥æ§æ¨¡å¼
+		else if(count>2*Angle&&count<=3*Angle) Flag_Way=1,Flag_Stop=1;	//PS2é¥æ§æ¨¡å¼
+		else if(count>3*Angle&&count<=4*Angle) Flag_Way=2,Flag_Stop=1;	//CCDå·¡çº¿æ¨¡å¼
+		else if(count>4*Angle&&count<=5*Angle) Flag_Way=3,Flag_Stop=1;	//ç”µç£å·¡çº¿æ¨¡å¼
 	  else TIM4->CNT=0;
-    if(KEY==0||Start_Count>600)Flag_Next=1;//Èç¹û°´¼ü°´ÏÂ»òÕß³¬¹ı´ó¸Å8ÃëÃ»ÓĞ×ª¶¯ÂÖ×Ó
-	  if(Flag_Next==1)OLED_Clear(),flag=0;  //Çå³ıOLEDÆÁÄ» ³ÌĞòÍùÏÂÔËĞĞ
+    if(KEY==0||Start_Count>600)Flag_Next=1;//å¦‚æœæŒ‰é”®æŒ‰ä¸‹æˆ–è€…è¶…è¿‡å¤§æ¦‚8ç§’æ²¡æœ‰è½¬åŠ¨è½®å­
+	  if(Flag_Next==1)OLED_Clear(),flag=0;  //æ¸…é™¤OLEDå±å¹• ç¨‹åºå¾€ä¸‹è¿è¡Œ
 	  Last_Encoder_Temp=Encoder_Temp;
 	  return flag;	  
 }

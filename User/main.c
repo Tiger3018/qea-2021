@@ -1,88 +1,88 @@
 #include "stm32f10x.h"
 #include "sys.h"
   /**************************************************************************
-×÷Õß£ºÆ½ºâĞ¡³µÖ®¼Ò
-ÎÒµÄÌÔ±¦Ğ¡µê£ºhttp://shop114407458.taobao.com/
+ä½œè€…ï¼šå¹³è¡¡å°è½¦ä¹‹å®¶
+æˆ‘çš„æ·˜å®å°åº—ï¼šhttp://shop114407458.taobao.com/
 **************************************************************************/
-u8 Flag_Left,Flag_Right,Flag_Direction=0,Flag_Way,Flag_Next; //À¶ÑÀÒ£¿ØÏà¹ØµÄ±äÁ¿
-u8 Flag_Stop=1,Flag_Show; //Í£Ö¹±êÖ¾Î»ºÍ ÏÔÊ¾±êÖ¾Î» Ä¬ÈÏÍ£Ö¹ ÏÔÊ¾´ò¿ª
-int Encoder_Left,Encoder_Right;  //±àÂëÆ÷µÄÂö³å¼ÆÊı                 
-long int Motor_Left,Motor_Right; //µç»úPWM±äÁ¿
-long int Target_Left,Target_Right; //µç»úÄ¿±êÖµ
-float Velocity,Turn,Servo; //ËÙ¶ÈºÍ½Ç¶È±äÁ¿
-int Voltage;//µç³ØµçÑ¹²ÉÑùÏà¹ØµÄ±äÁ¿                       
-u8 delay_50,delay_flag; //ÑÓÊ±Ïà¹Ø±äÁ¿
-u8 rxbuf[8],Urxbuf[8],CAN_ON_Flag=0,Usart_ON_Flag=0,Usart_Flag,PID_Send;  //CANºÍ´®¿Ú¿ØÖÆÏà¹Ø±äÁ¿
-u8 txbuf[8],txbuf2[8];  //CAN·¢ËÍÏà¹Ø±äÁ¿
-float Pitch,Roll,Yaw,Gryo_Z;   //ÈıÖá½Ç¶È ZÖáÍÓÂİÒÇºÍXYZÖáÄ¿±êËÙ¶È
-float Velocity_KP=10,Velocity_KI=10;	          //ËÙ¶È¿ØÖÆPID²ÎÊı
-int RC_Velocity=30;         //ÉèÖÃÒ£¿ØµÄËÙ¶ÈºÍÎ»ÖÃÖµ
-int PS2_LX,PS2_LY,PS2_RX,PS2_RY,PS2_KEY; //PS2Ïà¹Ø±äÁ¿ 
-u16 CCD_Zhongzhi,CCD_Yuzhi,ADV[128]={0};//CCDÏà¹Ø±äÁ¿
-int Sensor_Left,Sensor_Middle,Sensor_Right,Sensor;//µç´ÅÑ²ÏßÏà¹Ø
-int Remoter_Ch1,Remoter_Ch2,Remoter_Ch3,Remoter_Ch4;//º½Ä£Ò£¿Ø²É¼¯Ïà¹Ø±äÁ¿
-int Distance_A,Distance_B,Distance_C,Distance_D;//³¬Éù²¨Ïà¹Ø±äÁ¿ 
+u8 Flag_Left,Flag_Right,Flag_Direction=0,Flag_Way,Flag_Next; //è“ç‰™é¥æ§ç›¸å…³çš„å˜é‡
+u8 Flag_Stop=1,Flag_Show; //åœæ­¢æ ‡å¿—ä½å’Œ æ˜¾ç¤ºæ ‡å¿—ä½ é»˜è®¤åœæ­¢ æ˜¾ç¤ºæ‰“å¼€
+int Encoder_Left,Encoder_Right;  //ç¼–ç å™¨çš„è„‰å†²è®¡æ•°                 
+long int Motor_Left,Motor_Right; //ç”µæœºPWMå˜é‡
+long int Target_Left,Target_Right; //ç”µæœºç›®æ ‡å€¼
+float Velocity,Turn,Servo; //é€Ÿåº¦å’Œè§’åº¦å˜é‡
+int Voltage;//ç”µæ± ç”µå‹é‡‡æ ·ç›¸å…³çš„å˜é‡                       
+u8 delay_50,delay_flag; //å»¶æ—¶ç›¸å…³å˜é‡
+u8 rxbuf[8],Urxbuf[8],CAN_ON_Flag=0,Usart_ON_Flag=0,Usart_Flag,PID_Send;  //CANå’Œä¸²å£æ§åˆ¶ç›¸å…³å˜é‡
+u8 txbuf[8],txbuf2[8];  //CANå‘é€ç›¸å…³å˜é‡
+float Pitch,Roll,Yaw,Gryo_Z;   //ä¸‰è½´è§’åº¦ Zè½´é™€èºä»ªå’ŒXYZè½´ç›®æ ‡é€Ÿåº¦
+float Velocity_KP=10,Velocity_KI=10;	          //é€Ÿåº¦æ§åˆ¶PIDå‚æ•°
+int RC_Velocity=30;         //è®¾ç½®é¥æ§çš„é€Ÿåº¦å’Œä½ç½®å€¼
+int PS2_LX,PS2_LY,PS2_RX,PS2_RY,PS2_KEY; //PS2ç›¸å…³å˜é‡ 
+u16 CCD_Zhongzhi,CCD_Yuzhi,ADV[128]={0};//CCDç›¸å…³å˜é‡
+int Sensor_Left,Sensor_Middle,Sensor_Right,Sensor;//ç”µç£å·¡çº¿ç›¸å…³
+int Remoter_Ch1,Remoter_Ch2,Remoter_Ch3,Remoter_Ch4;//èˆªæ¨¡é¥æ§é‡‡é›†ç›¸å…³å˜é‡
+int Distance_A,Distance_B,Distance_C,Distance_D;//è¶…å£°æ³¢ç›¸å…³å˜é‡ 
 
 
 int main(void)
   { 
-		delay_init();	    	            //=====ÑÓÊ±º¯Êı³õÊ¼»¯	
-		JTAG_Set(SWD_ENABLE);           //=====´ò¿ªSWD½Ó¿Ú ¿ÉÒÔÀûÓÃÖ÷°åµÄSWD½Ó¿Úµ÷ÊÔ
-		LED_Init();                     //=====³õÊ¼»¯Óë LED Á¬½ÓµÄÓ²¼ş½Ó¿Ú
-	  KEY_Init();                     //=====°´¼ü³õÊ¼»¯
-		MY_NVIC_PriorityGroupConfig(2);	//=====ÉèÖÃÖĞ¶Ï·Ö×é
-    MiniBalance_PWM_Init(7199,0);   //=====³õÊ¼»¯PWM 10KHZ£¬ÓÃÓÚÇı¶¯µç»ú ÈçĞè³õÊ¼»¯µçµ÷½Ó¿Ú
-		Servo_PWM_Init(9999,71);   		  //=====³õÊ¼»¯PWM50HZÇı¶¯ ¶æ»ú	
-		uart5_init(115200);             //=====´®¿Ú5³õÊ¼»¯
-		usart3_init(9600);              //=====´®¿Ú3³õÊ¼»¯ 
-		usart1_init(115200);						//=====´®¿Ú1³õÊ¼»¯ 
-		OLED_Init();                    //=====OLED³õÊ¼»¯	    
-    Encoder_Init_TIM2();            //=====±àÂëÆ÷½Ó¿Ú
-		Encoder_Init_TIM4();            //=====±àÂëÆ÷½Ó¿Ú
-    while(select())	{	}	            //=====Ñ¡ÔñÔËĞĞÄ£Ê½ 		
-		delay_ms(500);                  //=====ÑÓÊ±µÈ´ıÎÈ¶¨
-    IIC_Init();                     //=====IIC³õÊ¼»¯
-    MPU6050_initialize();           //=====MPU6050³õÊ¼»¯	
-  	DMP_Init();                     //=====³õÊ¼»¯DMP   
-		CAN1_Mode_Init(1,2,3,6,0);			//=====CAN³õÊ¼»¯,²¨ÌØÂÊ1Mbps
-		Adc_Init();                     //=====adc³õÊ¼»¯		
+		delay_init();	    	            //=====å»¶æ—¶å‡½æ•°åˆå§‹åŒ–	
+		JTAG_Set(SWD_ENABLE);           //=====æ‰“å¼€SWDæ¥å£ å¯ä»¥åˆ©ç”¨ä¸»æ¿çš„SWDæ¥å£è°ƒè¯•
+		LED_Init();                     //=====åˆå§‹åŒ–ä¸ LED è¿æ¥çš„ç¡¬ä»¶æ¥å£
+	  KEY_Init();                     //=====æŒ‰é”®åˆå§‹åŒ–
+		MY_NVIC_PriorityGroupConfig(2);	//=====è®¾ç½®ä¸­æ–­åˆ†ç»„
+    MiniBalance_PWM_Init(7199,0);   //=====åˆå§‹åŒ–PWM 10KHZï¼Œç”¨äºé©±åŠ¨ç”µæœº å¦‚éœ€åˆå§‹åŒ–ç”µè°ƒæ¥å£
+		Servo_PWM_Init(9999,71);   		  //=====åˆå§‹åŒ–PWM50HZé©±åŠ¨ èˆµæœº	
+		uart5_init(115200);             //=====ä¸²å£5åˆå§‹åŒ–
+		usart3_init(9600);              //=====ä¸²å£3åˆå§‹åŒ– 
+		usart1_init(115200);						//=====ä¸²å£1åˆå§‹åŒ– 
+		OLED_Init();                    //=====OLEDåˆå§‹åŒ–	    
+    Encoder_Init_TIM2();            //=====ç¼–ç å™¨æ¥å£
+		Encoder_Init_TIM4();            //=====ç¼–ç å™¨æ¥å£
+    while(select())	{	}	            //=====é€‰æ‹©è¿è¡Œæ¨¡å¼ 		
+		delay_ms(500);                  //=====å»¶æ—¶ç­‰å¾…ç¨³å®š
+    IIC_Init();                     //=====IICåˆå§‹åŒ–
+    MPU6050_initialize();           //=====MPU6050åˆå§‹åŒ–	
+  	DMP_Init();                     //=====åˆå§‹åŒ–DMP   
+		CAN1_Mode_Init(1,2,3,6,0);			//=====CANåˆå§‹åŒ–,æ³¢ç‰¹ç‡1Mbps
+		Adc_Init();                     //=====adcåˆå§‹åŒ–		
 	 if(Flag_Way==1)
 	  {
-		PS2_Init();											//=====PS2ÊÖ±ú³õÊ¼»¯
-		PS2_SetInit();									//=====ps2ÅäÖÃ³õÊ¼»¯,ÅäÖÃ¡°ºìÂÌµÆÄ£Ê½¡±£¬²¢Ñ¡ÔñÊÇ·ñ¿ÉÒÔĞŞ¸Ä
+		PS2_Init();											//=====PS2æ‰‹æŸ„åˆå§‹åŒ–
+		PS2_SetInit();									//=====ps2é…ç½®åˆå§‹åŒ–,é…ç½®â€œçº¢ç»¿ç¯æ¨¡å¼â€ï¼Œå¹¶é€‰æ‹©æ˜¯å¦å¯ä»¥ä¿®æ”¹
 	  }
-	  else if(Flag_Way==2)ccd_Init();  //=====CCD³õÊ¼»¯
-	  else if(Flag_Way==3)ele_Init();  //=====µç´Å´«¸ĞÆ÷³õÊ¼»¯	
-		//TIM5_Cap_Init(0XFFFF,72-1);	  //=====³¬Éù²¨Ê¼»¯ Ä¬ÈÏ×¢ÊÍ ³¬Éù²¨½ÓÏß ²Î¿¼timer.hÎÄ¼ş
-		//TIM3_Cap_Init(0XFFFF,72-1);	  //=====º½Ä£Ò£¿Ø³õÊ¼»¯  Ä¬ÈÏ×¢ÊÍº½Ä£Ò£¿ØÆ÷½ÓÏß ²Î¿¼timer.hÎÄ¼ş
-	  MiniBalance_EXTI_Init();        //=====MPU6050 5ms¶¨Ê±ÖĞ¶Ï³õÊ¼»¯
+	  else if(Flag_Way==2)ccd_Init();  //=====CCDåˆå§‹åŒ–
+	  else if(Flag_Way==3)ele_Init();  //=====ç”µç£ä¼ æ„Ÿå™¨åˆå§‹åŒ–	
+		//TIM5_Cap_Init(0XFFFF,72-1);	  //=====è¶…å£°æ³¢å§‹åŒ– é»˜è®¤æ³¨é‡Š è¶…å£°æ³¢æ¥çº¿ å‚è€ƒtimer.hæ–‡ä»¶
+		//TIM3_Cap_Init(0XFFFF,72-1);	  //=====èˆªæ¨¡é¥æ§åˆå§‹åŒ–  é»˜è®¤æ³¨é‡Šèˆªæ¨¡é¥æ§å™¨æ¥çº¿ å‚è€ƒtimer.hæ–‡ä»¶
+	  MiniBalance_EXTI_Init();        //=====MPU6050 5mså®šæ—¶ä¸­æ–­åˆå§‹åŒ–
     while(1)
 	   {	
-			   if(Flag_Way==1) //PS2Ä£Ê½²ÅÖ´ĞĞ
+			   if(Flag_Way==1) //PS2æ¨¡å¼æ‰æ‰§è¡Œ
 			   {
-						PS2_LX=PS2_AnologData(PSS_LX);    //PS2Êı¾İ²É¼¯    
+						PS2_LX=PS2_AnologData(PSS_LX);    //PS2æ•°æ®é‡‡é›†    
 						PS2_LY=PS2_AnologData(PSS_LY);
 						PS2_RX=PS2_AnologData(PSS_RX);
 						PS2_RY=PS2_AnologData(PSS_RY);
 						PS2_KEY=PS2_DataKey();	
 			   }
-				  if(Flag_Way==0)           //APPÄ£Ê½²ÅÍ¨¹ı´®¿ÚºÍCANÏòÍâ·¢ËÍÖ¸Áî
+				  if(Flag_Way==0)           //APPæ¨¡å¼æ‰é€šè¿‡ä¸²å£å’ŒCANå‘å¤–å‘é€æŒ‡ä»¤
 			    {
-						CAN1_SEND();             //CAN·¢ËÍ		
-						UART_TX();               //´®¿Ú·¢ËÍ
+						CAN1_SEND();             //CANå‘é€		
+						UART_TX();               //ä¸²å£å‘é€
 				  }
-					if(Flag_Show==0)         //Ê¹ÓÃMiniBalance APPºÍOLEDÏÔÊ¾ÆÁ
+					if(Flag_Show==0)         //ä½¿ç”¨MiniBalance APPå’ŒOLEDæ˜¾ç¤ºå±
 					{
   						APP_Show();	
-							oled_show();          //===ÏÔÊ¾ÆÁ´ò¿ª
+							oled_show();          //===æ˜¾ç¤ºå±æ‰“å¼€
 					}
-					else                      //Ê¹ÓÃMiniBalanceÉÏÎ»»ú ÉÏÎ»»úÊ¹ÓÃµÄÊ±ºòĞèÒªÑÏ¸ñµÄÊ±Ğò£¬¹Ê´ËÊ±¹Ø±Õapp¼à¿Ø²¿·ÖºÍOLEDÏÔÊ¾ÆÁ
+					else                      //ä½¿ç”¨MiniBalanceä¸Šä½æœº ä¸Šä½æœºä½¿ç”¨çš„æ—¶å€™éœ€è¦ä¸¥æ ¼çš„æ—¶åºï¼Œæ•…æ­¤æ—¶å…³é—­appç›‘æ§éƒ¨åˆ†å’ŒOLEDæ˜¾ç¤ºå±
 					{
-				      DataScope();          //¿ªÆôMiniBalanceÉÏÎ»»ú
+				      DataScope();          //å¼€å¯MiniBalanceä¸Šä½æœº
 					}		
 				  delay_flag=1;	
 					delay_50=0;
-	 	    	while(delay_flag);	     //Í¨¹ı¶¨Ê±ÖĞ¶ÏÊµÏÖµÄ50ms¾«×¼ÑÓÊ±	
+	 	    	while(delay_flag);	     //é€šè¿‡å®šæ—¶ä¸­æ–­å®ç°çš„50msç²¾å‡†å»¶æ—¶	
 	  } 
 }
 

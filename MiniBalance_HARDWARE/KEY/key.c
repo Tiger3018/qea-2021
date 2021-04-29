@@ -114,10 +114,11 @@ u8  select(void)
 		Encoder_Temp=abs((short)TIM4->CNT);
     count=Encoder_Temp;
 	  if(abs(Encoder_Temp-Last_Encoder_Temp)==0)Start_Count++; else Start_Count=0;
-	  if(count<=Angle)								       Flag_Way=0,Flag_Stop=0;  //APP遥控模式
-		else if(count>Angle&&count<=2*Angle)	 Flag_Way=1,Flag_Stop=1;  //PS2遥控模式
-		else if(count>2*Angle&&count<=3*Angle) Flag_Way=2,Flag_Stop=1;	//CCD巡线模式
-		else if(count>3*Angle&&count<=4*Angle) Flag_Way=3,Flag_Stop=1;	//电磁巡线模式
+	  if(count<=Angle)								       Flag_Way=4,Flag_Stop=1;  //我们的模式
+		else if(count>Angle&&count<=2*Angle)	 Flag_Way=0,Flag_Stop=0;  //APP遥控模式
+		else if(count>2*Angle&&count<=3*Angle) Flag_Way=1,Flag_Stop=1;	//PS2遥控模式
+		else if(count>3*Angle&&count<=4*Angle) Flag_Way=2,Flag_Stop=1;	//CCD巡线模式
+		else if(count>4*Angle&&count<=5*Angle) Flag_Way=3,Flag_Stop=1;	//电磁巡线模式
 	  else TIM4->CNT=0;
     if(KEY==0||Start_Count>600)Flag_Next=1;//如果按键按下或者超过大概8秒没有转动轮子
 	  if(Flag_Next==1)OLED_Clear(),flag=0;  //清除OLED屏幕 程序往下运行

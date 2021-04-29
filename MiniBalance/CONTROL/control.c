@@ -232,6 +232,15 @@ void Get_RC(void)
 		 Turn=abs(Bias)*Bias*0.008+Bias*0.08+(Bias-Last_Bias)*3; //
 		 Last_Bias=Bias;   //上一次的偏差
 		}
+		else if(Flag_Way == 4)
+		{
+			if(qg_mode_stop)
+				Velocity = 0;
+			else if(qg_mode_reverse)
+				Velocity = -10;
+			else
+				Velocity = 10;
+		}
 		Kinematic_Analysis(Velocity,Turn); 	//小车运动学分析   	
  }
 	 else //can或者串口控制模式

@@ -65,6 +65,23 @@ void oled_show(void)
 						OLED_ShowString(0,10,"Mid");
 						OLED_ShowNumber(25,10,Sensor,4,12);		  
 					}									
+					else if(Flag_Way == 4)
+					{
+					 //=============第1行显示3轴角度===============//	
+						OLED_ShowString(0,0,"X:");
+						if(Pitch<0)		OLED_ShowNumber(15,0,Pitch+360,3,12);
+						else					OLED_ShowNumber(15,0,Pitch,3,12);	
+								
+						OLED_ShowString(40,0,"Y:");
+						if(Roll<0)		OLED_ShowNumber(55,0,Roll+360,3,12);
+						else					OLED_ShowNumber(55,0,Roll,3,12);	
+					
+						OLED_ShowString(80,0,"Z:");
+						if(Yaw<0)		  OLED_ShowNumber(95,0,Yaw+360,3,12);
+						else					OLED_ShowNumber(95,0,Yaw,3,12);		
+
+						OLED_ShowString(00, 10, "OurMis SeaOfStar");
+					}
 					//=============第3行显示左电机的状态=======================//	
 						if( Target_Left<0)		  OLED_ShowString(00,20,"-"),
 																OLED_ShowNumber(15,20,-Target_Left,5,12);
@@ -106,6 +123,7 @@ void oled_show(void)
 											else if(Flag_Way==1)          OLED_ShowString(0,50,"PS2");
 											else if(Flag_Way==2)				  OLED_ShowString(0,50,"CCD");
 											else if(Flag_Way==3)				  OLED_ShowString(0,50,"ELE");
+											else if(Flag_Way==4)				  OLED_ShowString(0,50,"QJ4");
 											OLED_Refresh_Gram();	//刷新
 }
 /**************************************************************************
@@ -190,6 +208,7 @@ void oled_show_once(void)
 	if(Flag_Way==1)         OLED_ShowString(50,30,"PS2");//PS2模式
 	if(Flag_Way==2)				  OLED_ShowString(50,30,"CCD");//CCD模式
 	if(Flag_Way==3)				  OLED_ShowString(50,30,"ELE");//电磁巡线模式
+	if(Flag_Way==4)				  OLED_ShowString(35,30,"QJ4");//自然前进模式 only 3 char is preferred
 	OLED_ShowString(0,40,"Press User Key");// 按一下用户按键
   OLED_ShowString(0,50,"TO End Selection");//结束选择
 	OLED_Refresh_Gram();	//OLED刷新

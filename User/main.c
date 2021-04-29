@@ -22,6 +22,8 @@ u16 CCD_Zhongzhi,CCD_Yuzhi,ADV[128]={0};//CCD相关变量
 int Sensor_Left,Sensor_Middle,Sensor_Right,Sensor;//电磁巡线相关
 int Remoter_Ch1,Remoter_Ch2,Remoter_Ch3,Remoter_Ch4;//航模遥控采集相关变量
 int Distance_A,Distance_B,Distance_C,Distance_D;//超声波相关变量 
+
+
 int main(void)
   { 
 		delay_init();	    	            //=====延时函数初始化	

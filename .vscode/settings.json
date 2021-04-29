@@ -5,7 +5,10 @@
         "*.toml": "toml",
         "sys.h": "c",
         "stm32f10x.h": "c",
-        "DataScope_DP.C": "cpp"
+        "DataScope_DP.C": "cpp",
+        "filter.h": "c",
+        "qg.h": "c",
+        "control.h": "c"
     },
     "terminal.integrated.shell.windows": "c:/Windows/System32/cmd.exe",
     "terminal.integrated.shellArgs.windows": "",

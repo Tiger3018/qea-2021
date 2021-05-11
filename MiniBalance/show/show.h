@@ -11,4 +11,5 @@ void OLED_DrawPoint_Shu(u8 x,u8 y,u8 t);
 void OLED_Show_CCD(void);
 void oled_show_once(void);
 void DataScope(void);
+extern u8 qg_mode_stop;
 #endif

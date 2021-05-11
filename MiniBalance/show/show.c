@@ -123,7 +123,13 @@ void oled_show(void)
 											else if(Flag_Way==1)          OLED_ShowString(0,50,"PS2");
 											else if(Flag_Way==2)				  OLED_ShowString(0,50,"CCD");
 											else if(Flag_Way==3)				  OLED_ShowString(0,50,"ELE");
-											else if(Flag_Way==4)				  OLED_ShowString(0,50,"QJ4");
+											else if(Flag_Way==4)
+											{
+												OLED_ShowString(0,50,"Q=");
+												OLED_ShowNumber(15, 50, PAin(6), 1, 12);
+												OLED_ShowNumber(20, 50, PBin(1), 1, 12);
+												OLED_ShowNumber(25, 50, qg_mode_stop, 1, 12);
+											}
 											OLED_Refresh_Gram();	//刷新
 }
 /**************************************************************************
@@ -208,7 +214,7 @@ void oled_show_once(void)
 	if(Flag_Way==1)         OLED_ShowString(50,30,"PS2");//PS2模式
 	if(Flag_Way==2)				  OLED_ShowString(50,30,"CCD");//CCD模式
 	if(Flag_Way==3)				  OLED_ShowString(50,30,"ELE");//电磁巡线模式
-	if(Flag_Way==4)				  OLED_ShowString(35,30,"QJ4");//自然前进模式 only 3 char is preferred
+	if(Flag_Way==4)				  OLED_ShowString(42,30,"=QJ4=");//自然前进模式 per 8 pos
 	OLED_ShowString(0,40,"Press User Key");// 按一下用户按键
   OLED_ShowString(0,50,"TO End Selection");//结束选择
 	OLED_Refresh_Gram();	//OLED刷新

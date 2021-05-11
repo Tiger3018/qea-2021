@@ -12,9 +12,14 @@ void KEY_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); //使能端口时钟
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14; //端口配置
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); //使能端口时钟
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;         //上拉输入
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14; //端口配置
   GPIO_Init(GPIOB, &GPIO_InitStructure);					      //根据设定参数初始化GPIO
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
 } 
 /**************************************************************************
 函数功能：按键扫描
@@ -76,6 +81,7 @@ u8 click(void)
 			}
 			else if(1==KEY)			flag_key=1;
 			return 0;//无按键按下
+
 }
 /**************************************************************************
 函数功能：长按检测

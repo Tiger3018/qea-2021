@@ -115,6 +115,7 @@ void Key(void)
 	if(tmp==2)Flag_Show=!Flag_Show;//双击控制小车的显示状态
 	tmp2=Long_Press();  //长按        
   if(tmp2==1)Flag_Show=!Flag_Show;//控制小车的显示状态                 
+	qg_coli();
 }
 /**************************************************************************
 函数功能：异常关闭电机
@@ -234,12 +235,13 @@ void Get_RC(void)
 		}
 		else if(Flag_Way == 4)
 		{
+			Velocity = 10;
 			if(qg_mode_stop)
 				Velocity = 0;
 			else if(qg_mode_reverse)
 				Velocity = -10;
-			else
-				Velocity = 10;
+			// else
+				// Velocity = 10;
 		}
 		Kinematic_Analysis(Velocity,Turn); 	//小车运动学分析   	
  }

@@ -21,5 +21,6 @@ int Incremental_PI_Left (int Encoder,int Target);
 int Incremental_PI_Right (int Encoder,int Target);
 void Get_RC(void);
 void  Find_CCD_Zhongzhi(void);
+void qg_coli(void);
 extern u8 qg_mode_stop, qg_mode_reverse;
 #endif

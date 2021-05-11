@@ -8,3 +8,4 @@ OBJ/
 
 USER/.vscode/c_cpp_properties.json
 USER/*.map
+.vscode/*.json

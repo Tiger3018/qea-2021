@@ -57,11 +57,15 @@ void OLED_Display_Off(void)
 	OLED_WR_Byte(0X10,OLED_CMD);  //DCDC OFF
 	OLED_WR_Byte(0XAE,OLED_CMD);  //DISPLAY OFF
 }		   			 
-//清屏函数,清完屏,整个屏幕是黑色的!和没点亮一样!!!	  
+/* OLED_Clear
+  清屏函数,清完屏,整个屏幕是黑色的!和没点亮一样!!!	  
+	是吗？好像不是吧（（
+*/
 void OLED_Clear(void)  
 {  
 	u8 i,n;  
 	for(i=0;i<8;i++)for(n=0;n<128;n++)OLED_GRAM[n][i]=0X00;  
+	OLED_ShowString(0, 50, "~C~");
 	OLED_Refresh_Gram();//更新显示
 }
 //画点 

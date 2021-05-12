@@ -23,4 +23,5 @@ void Get_RC(void);
 void  Find_CCD_Zhongzhi(void);
 void qg_coli(void);
 extern u8 qg_mode_stop, qg_mode_reverse;
+extern float qg_velL, qg_velR;
 #endif

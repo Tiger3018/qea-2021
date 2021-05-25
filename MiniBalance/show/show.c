@@ -113,6 +113,7 @@ void oled_show(void)
                       OLED_ShowString(70,50,"V");
                       OLED_ShowNumber(35,50,Voltage/100,2,12);//电压
                       OLED_ShowNumber(58,50,Voltage%100,2,12);
+ if(!(Voltage / 1000))OLED_ShowString(35,50,"\177");
  if(Voltage%100<10) 	OLED_ShowNumber(52,50,0,2,12);
                        //  电机使能/使能显示
                       if(Flag_Stop==0)//根据Flag_Stop标志位显示电机的状态

@@ -35,16 +35,16 @@ int main(void)
     Servo_PWM_Init(9999,71);         //=====初始化PWM50HZ驱动 舵机  
     uart5_init(115200);             //=====串口5初始化
     usart3_init(9600);              //=====串口3初始化 
-    usart1_init(115200);            //=====串口1初始化 
+    // usart1_init(115200);            //=====串口1初始化 
     OLED_Init();                    //=====OLED初始化      
     Encoder_Init_TIM2();            //=====编码器接口
     Encoder_Init_TIM4();            //=====编码器接口
     while(select())  {  }              //=====选择运行模式     
     delay_ms(500);                  //=====延时等待稳定
     IIC_Init();                     //=====IIC初始化
-    MPU6050_initialize();           //=====MPU6050初始化  
-    DMP_Init();                     //=====初始化DMP   
-    CAN1_Mode_Init(1,2,3,6,0);      //=====CAN初始化,波特率1Mbps
+    // MPU6050_initialize();           //=====MPU6050初始化  
+     DMP_Init();                     //=====初始化DMP   
+    // CAN1_Mode_Init(1,2,3,6,0);      //=====CAN初始化,波特率1Mbps
     Adc_Init();                     //=====adc初始化    
   //  if(Flag_Way==1)
   //   {
@@ -69,7 +69,7 @@ int main(void)
         if(Flag_Way==0)           //APP模式才通过串口和CAN向外发送指令
         {
           CAN1_SEND();             //CAN发送    
-          UART_TX();               //串口发送
+          // UART_TX();               //串口发送
         }
         if(Flag_Show==0)         //使用MiniBalance APP和OLED显示屏
         {
@@ -78,7 +78,7 @@ int main(void)
         }
         else                      //使用MiniBalance上位机 上位机使用的时候需要严格的时序，故此时关闭app监控部分和OLED显示屏
         {
-            DataScope();          //开启MiniBalance上位机
+            // DataScope();          //开启MiniBalance上位机
         }    
         if(Flag_Way == 5)
           qg_open();

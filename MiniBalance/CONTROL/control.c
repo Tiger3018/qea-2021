@@ -8,9 +8,6 @@
 u8 Flag_Target,Flag_Change;  //相关标志位
 float Voltage_Count,Voltage_All;  //电压采样相关变量
 int j,sum;
-#define T 0.156f
-#define L 0.1445f
-#define K 622.8f
 /**************************************************************************
 函数功能：小车运动数学模型
 入口参数：速度和转角
@@ -67,15 +64,18 @@ int EXTI15_10_IRQHandler(void)
       Get_RC();   //===接收控制指令
      if(Turn_Off(Voltage)==0)   //===如果电池电压不存在异常
      { 	
-        if(Flag_Way == 5)
+        if(NO_ENCODER_CONTROL)
         {
           Motor_Left = Target_Left;  
           Motor_Right = Target_Right;
-          Xianfu_Pwm(6900);
-          Set_Pwm(Motor_Left,Motor_Right,Servo);     // We must assgin data to Motor_xxx, to use Xianfu_Pwm()  
+          // Xianfu_Pwm(6900);
+          // Set_Pwm(Motor_Left,Motor_Right,Servo);     // We must assgin data to Motor_xxx, to use Xianfu_Pwm()  
         }
-        Motor_Left=Incremental_PI_Left(Encoder_Left,Target_Left);  //===速度闭环控制计算左电机最终PWM
-        Motor_Right=Incremental_PI_Right(Encoder_Right,Target_Right);  //===速度闭环控制计算右电机最终PWM
+        else
+        {
+          Motor_Left=Incremental_PI_Left(Encoder_Left,Target_Left);  //===速度闭环控制计算左电机最终PWM
+          Motor_Right=Incremental_PI_Right(Encoder_Right,Target_Right);  //===速度闭环控制计算右电机最终PWM
+        }
         Xianfu_Pwm(6900);                          //===PWM限幅
         Set_Pwm(Motor_Left,Motor_Right,Servo);     //===赋值给PWM寄存器  
      }
@@ -134,14 +134,16 @@ u8 Turn_Off( int voltage)
       u8 temp;
       if(voltage<1110||Flag_Stop==1)//电池电压低于11.1V关闭电机
       {	                                                
+        temp=1;      
       temp=1;      
-       PWMA1=0; //电机控制位清零                                           
-      PWMB1=0; //电机控制位清零
-      PWMA2=0; //电机控制位清零
-      PWMB2=0; //电机控制位清零					
+        temp=1;      
+        PWMA1=0; //电机控制位清零                                           
+        PWMB1=0; //电机控制位清零
+        PWMA2=0; //电机控制位清零
+        PWMB2=0; //电机控制位清零					
       }
       else
-      temp=0;
+        temp=0;
       return temp;			
 }
 
@@ -196,9 +198,9 @@ int Incremental_PI_Right (int Encoder,int Target)
 **************************************************************************/
 void Get_RC(void)
 {
-  int Yuzhi=2;  		//PS2控制防抖阈值
-  float LY,RX,RY;  //PS2手柄控制变量
-  static float Bias,Last_Bias;  //偏差和历史值
+  // int Yuzhi=2;  		//PS2控制防抖阈值
+  // float LY,RX,RY;  //PS2手柄控制变量
+  // static float Bias,Last_Bias;  //偏差和历史值
    if(CAN_ON_Flag==0&&Usart_ON_Flag==0) 
     {
       if(Flag_Way==0)//串口等控制方式
@@ -215,7 +217,7 @@ void Get_RC(void)
               else Velocity=0,Turn=0;   //停止
               if(Turn==0&&Roll>-45&&Roll<45)Turn=-gyro[2]*0.002;  
       }		
-    else	if(Flag_Way==1)//PS2控制
+    /*else if(Flag_Way==1)//PS2控制
       {
         LY=PS2_LY-128;     //计算偏差
         RX=PS2_RX-128;
@@ -226,20 +228,20 @@ void Get_RC(void)
         Turn=-RX/6; 	
         if(Turn==0&&Roll>-45&&Roll<45)Turn=-gyro[2]*0.001;  
       }
-      else	if(Flag_Way==2)//CCD巡线
+      else if(Flag_Way==2)//CCD巡线
      {
      Velocity=45;	   //CCD巡线模式的速度
      Bias=CCD_Zhongzhi-64;   //提取偏差
      Turn=-Bias*0.4-(Bias-Last_Bias)*2; //PD控制
      Last_Bias=Bias;   //保存上一次的偏差
      }
-      else	if(Flag_Way==3)//电磁巡线
+      else if(Flag_Way==3)//电磁巡线
     {
      Velocity=45;	  //电磁巡线模式下的速度
      Bias=100-Sensor;  //提取偏差
      Turn=abs(Bias)*Bias*0.008+Bias*0.08+(Bias-Last_Bias)*3; //
      Last_Bias=Bias;   //上一次的偏差
-    }
+    }*/
     else if(Flag_Way == 4)
     {
       Velocity = 10;

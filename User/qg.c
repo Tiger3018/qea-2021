@@ -22,7 +22,7 @@ void qg_coli(void)
   }
 }
 
-void qg_open(void)
+void qg_open_old(void)
 {
   const u16 delayCnt = 30, durationCnt = 60;
   static u16 cnt = 0; static u8 mode_sel = 0, mode_inter = 0;
@@ -64,5 +64,29 @@ void qg_open(void)
       mode_inter = 0,
       mode_sel = (++ mode_sel) % QG_LIST_NUM;
   }
+}
+
+void qg_open(void)
+{
+  static u16 cnt = 0, val_u = 0;
+  static double ans1 = 0.0, ans2 = 0.0, ans3 = 0.0;
+  /*if(val_u == 320)
+    return;
+  if(++ cnt == 10){
+    ans1 = 0.7155417528 * sqrt( cos(val_u) );
+    val_u += 1, cnt = 0;
+    if(val_u == 320)
+    {
+      qg_velL = qg_velR = 0;
+      return;
+    }
+  }*/
+  // qg_velL += 1;
+  // qg_velR += 1;
+  cnt += 7;
+  if(cnt >= 1000) cnt = 0;
+  qg_velL = lvc[cnt];
+  qg_velR = rvc[cnt];
+  // qg_velL = qg_velR = 20 + pa;
 }
 

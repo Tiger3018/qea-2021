@@ -8,6 +8,10 @@
 #define PI 3.14159265
 #define ZHONGZHI 0 
 #define DIFFERENCE 100
+#define NO_ENCODER_CONTROL 0
+#define T 0.156f
+#define L 0.1445f
+#define K 622.8f
 extern	int Balance_Pwm,Velocity_Pwm,Turn_Pwm;
 void Kinematic_Analysis(float velocity,float turn);
 int EXTI15_10_IRQHandler(void);

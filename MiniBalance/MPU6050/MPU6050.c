@@ -296,10 +296,11 @@ void Read_DMP(void)
 	  unsigned long sensor_timestamp;
 		unsigned char more;
 		long quat[4];
-
+                /* gyro = angular; accel = ; quat for euler*/
 				dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors, &more);		
 				if (sensors & INV_WXYZ_QUAT )
 				{    
+                     /* euler convert */
 					 q0=quat[0] / q30;
 					 q1=quat[1] / q30;
 					 q2=quat[2] / q30;
@@ -307,6 +308,9 @@ void Read_DMP(void)
 					 Pitch = asin(-2 * q1 * q3 + 2 * q0* q2)* 57.3; 	
 					 Roll = atan2(2 * q2 * q3 + 2 * q0 * q1, -2 * q1 * q1 - 2 * q2* q2 + 1)* 57.3; // roll
 					 Yaw = 	atan2(2*(q1*q2 + q0*q3),q0*q0+q1*q1-q2*q2-q3*q3) * 57.3;//yaw
+                     ac[0] = (int)(1e2 * accel[0] / 16384 + 0.5);
+                     ac[1] = (int)(1e2 * accel[1] / 16384 + 0.5);
+                     ac[2] = (int)(1e2 * accel[2] / 16384 + 0.5);
 				}
 
 }

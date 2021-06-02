@@ -15,6 +15,7 @@ u8 delay_50,delay_flag; //延时相关变量
 u8 rxbuf[8],Urxbuf[8],CAN_ON_Flag=0,Usart_ON_Flag=0,Usart_Flag,PID_Send;  //CAN和串口控制相关变量
 u8 txbuf[8],txbuf2[8];  //CAN发送相关变量
 float Pitch,Roll,Yaw,Gryo_Z;   //三轴角度 Z轴陀螺仪和XYZ轴目标速度
+short ac[3];
 float Velocity_KP=10,Velocity_KI=10;            //速度控制PID参数
 int RC_Velocity=30;         //设置遥控的速度和位置值
 int PS2_LX,PS2_LY,PS2_RX,PS2_RY,PS2_KEY; //PS2相关变量 
@@ -42,7 +43,7 @@ int main(void)
     while(select())  {  }              //=====选择运行模式     
     delay_ms(500);                  //=====延时等待稳定
     IIC_Init();                     //=====IIC初始化
-    // MPU6050_initialize();           //=====MPU6050初始化  
+    MPU6050_initialize();           //=====MPU6050初始化  
      DMP_Init();                     //=====初始化DMP   
     // CAN1_Mode_Init(1,2,3,6,0);      //=====CAN初始化,波特率1Mbps
     Adc_Init();                     //=====adc初始化    

@@ -104,6 +104,7 @@ extern float Velocity,Turn,Servo;
 extern u8 rxbuf[8],Urxbuf[8],CAN_ON_Flag,Usart_ON_Flag,Usart_Flag,PID_Send;  //CAN和串口控制相关变量
 extern u8 txbuf[8],txbuf2[8];  //CAN发送相关变量
 extern float Pitch,Roll,Yaw,Gryo_Z;   //三轴角度 Z轴陀螺仪和XYZ轴目标速度
+extern short ac[3];
 extern float	Position_KP,Position_KI,Position_KD;  //位置控制PID参数
 extern float Velocity_KP,Velocity_KI;	          //速度控制PID参数
 extern int RC_Velocity;         //设置遥控的速度和位置值

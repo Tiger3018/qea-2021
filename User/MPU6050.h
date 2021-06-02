@@ -2,6 +2,7 @@
 #define __MPU6050_H
 
 #include "sys.h"
+#include <math.h>
 #define devAddr  0xD0
 
 #define MPU6050_ADDRESS_AD0_LOW     0x68 // address pin low (GND), default for InvenSense evaluation board
@@ -331,7 +332,7 @@
 #define MPU6050_CLOCK_PLL_EXT32K        0x04
 #define MPU6050_CLOCK_PLL_EXT19M        0x05
 #define MPU6050_CLOCK_KEEP_RESET        0x07
-
+ 
 #define MPU6050_PWR2_LP_WAKE_CTRL_BIT       7
 #define MPU6050_PWR2_LP_WAKE_CTRL_LENGTH    2
 #define MPU6050_PWR2_STBY_XA_BIT            5
@@ -356,7 +357,7 @@
 extern	short gyro[3], accel[3];
 extern int16_t Gx_offset,Gy_offset,Gz_offset;
 extern float Acc1G_Values;
-extern float Pitch;
+
 //供外部调用的API
 void MPU6050_initialize(void); //初始化
 uint8_t MPU6050_testConnection(void); //检测MPU6050是否存在

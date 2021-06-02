@@ -67,39 +67,56 @@ void oled_show(void)
           }									
           else if(Flag_Way >= 4)
           {
-           //=============第1行显示3轴角度===============//	
-            OLED_ShowString(0,0,"X:");
-            if(Pitch<0)		OLED_ShowNumber(15,0,Pitch+360,3,12);
-            else					OLED_ShowNumber(15,0,Pitch,3,12);	
+            //=============第1行显示3轴角度===============//	
+            static const u8 s_off[3] = {0, 45, 90}, s_dis[3] = {'X', 'Y', 'Z'};
+            u8 s_i;
+            for(s_i = 0; s_i < 3; ++ s_i)
+            {
+              OLED_ShowChar(s_off[s_i] , 0, s_dis[s_i], 12, 1);
+              OLED_ShowChar(s_off[s_i] + 30, 0, '%', 12, 1);
+              if(ac[s_i] < 0)
+                OLED_ShowChar(s_off[s_i] + 12, 0, '-', 12, 0),
+                ac[s_i] = - ac[s_i],
+                OLED_ShowChar(s_off[s_i] + 18, 0, (ac[s_i] / 10) ? (ac[s_i] / 10 + '0') : (' '), 12, 0),
+                OLED_ShowChar(s_off[s_i] + 24, 0, ac[s_i] % 10 + '0', 12, 0),
+                OLED_ShowChar(s_off[s_i] + 30, 0, '%', 12, 0);
+              else if(ac[s_i] == 100)
+                OLED_ShowNumber(s_off[s_i] + 12, 0, ac[s_i], 3, 12);
+              else
+                OLED_ShowChar(s_off[s_i] + 12, 0, '+', 12, 1),
+                OLED_ShowNumber(s_off[s_i] + 18, 0, ac[s_i], 2, 12);
+            }    
+            OLED_ShowString(00, 20, "OurMis SeaOfStar");
+            OLED_ShowString(0,10,"X:");
+            if(Pitch<0) OLED_ShowNumber(18,10,Pitch+360,3,12);
+            else        OLED_ShowNumber(18,10,Pitch,3,12);	
                 
-            OLED_ShowString(40,0,"Y:");
-            if(Roll<0)		OLED_ShowNumber(55,0,Roll+360,3,12);
-            else					OLED_ShowNumber(55,0,Roll,3,12);	
+            OLED_ShowString(45,10,"Y:");
+            if(Roll<0)  OLED_ShowNumber(63,10,Roll+360,3,12);
+            else        OLED_ShowNumber(63,10,Roll,3,12);	
           
-            OLED_ShowString(80,0,"Z:");
-            if(Yaw<0)		  OLED_ShowNumber(95,0,Yaw+360,3,12);
-            else					OLED_ShowNumber(95,0,Yaw,3,12);		
-
-            OLED_ShowString(00, 10, "OurMis SeaOfStar");
+            OLED_ShowString(90,10,"Z:");
+            if(Yaw<0)   OLED_ShowNumber(108,10,Yaw+360,3,12);
+            else        OLED_ShowNumber(108,10,Yaw,3,12);		
           }
           //=============第3行显示左电机的状态=======================//	
-            if( Target_Left<0)		  OLED_ShowString(00,20,"-"),
-                                OLED_ShowNumber(15,20,-Target_Left,5,12);
-          else                 	OLED_ShowString(0,20,"+"),
-                                OLED_ShowNumber(15,20, Target_Left,5,12); 			
-          if( Encoder_Left<0)		  OLED_ShowString(80,20,"-"),
-                                OLED_ShowNumber(95,20,-Encoder_Left,4,12);
-          else                 	OLED_ShowString(80,20,"+"),
-                                OLED_ShowNumber(95,20, Encoder_Left,4,12);
-          //=============第4行显示右电机的状态=======================//	
-            if( Target_Right<0)		  OLED_ShowString(00,30,"-"),
-                                OLED_ShowNumber(15,30,-Target_Right,5,12);
+            if( Target_Left<0)		  OLED_ShowString(00,30,"-"),
+                                OLED_ShowNumber(15,30,-Target_Left,5,12);
           else                 	OLED_ShowString(0,30,"+"),
-                                OLED_ShowNumber(15,30, Target_Right,5,12); 					
-          if( Encoder_Right<0)		  OLED_ShowString(80,30,"-"),
-                                OLED_ShowNumber(95,30,-Encoder_Right,4,12);
+                                OLED_ShowNumber(15,30, Target_Left,5,12); 			
+          if( Encoder_Left<0)		  OLED_ShowString(80,30,"-"),
+                                OLED_ShowNumber(95,30,-Encoder_Left,4,12);
           else                 	OLED_ShowString(80,30,"+"),
-                                OLED_ShowNumber(95,30, Encoder_Right,4,12);	
+                                OLED_ShowNumber(95,30, Encoder_Left,4,12);
+          //=============第4行显示右电机的状态=======================//	
+            if( Target_Right<0)		  OLED_ShowString(00,40,"-"),
+                                OLED_ShowNumber(15,40,-Target_Right,5,12);
+          else                 	OLED_ShowString(0,40,"+"),
+                                OLED_ShowNumber(15,40, Target_Right,5,12); 					
+          if( Encoder_Right<0)		  OLED_ShowString(80,40,"-"),
+                                OLED_ShowNumber(95,40,-Encoder_Right,4,12);
+          else                 	OLED_ShowString(80,40,"+"),
+                                OLED_ShowNumber(95,40, Encoder_Right,4,12);	
 
 //					//=============第5行显示舵机的状态=======================//	
 //				 	OLED_ShowString(00,40,"Servo:"),	//舵机状态

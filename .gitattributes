@@ -1,3 +1,4 @@
 * text eol=crlf working-tree-encoding=gb2312
 *.uv* text eol=lf
 *stm32f10x* text working-tree-encoding=utf-8
+homework/** text=auto -working-tree-encoding eol=crlf

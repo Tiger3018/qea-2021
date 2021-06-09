@@ -66,10 +66,10 @@ void qg_open_old(void)
   }
 }
 
-void qg_open(void)
+void qg_open_old2(void)
 {
   static u16 cnt = 0, val_u = 0;
-  static double ans1 = 0.0, ans2 = 0.0, ans3 = 0.0;
+  // static double ans1 = 0.0, ans2 = 0.0, ans3 = 0.0;
   /*if(val_u == 320)
     return;
   if(++ cnt == 10){
@@ -90,3 +90,17 @@ void qg_open(void)
   // qg_velL = qg_velR = 20 + pa;
 }
 
+
+void qg_open(void)
+{
+  // 调参
+  long int basevel = (ac[1] < 4 && ac[1] > -4) ? 0 : ac[1] * 0.6, addvel = (ac[1] < 0) ? -6 : 6;
+  Velocity_KP=3.5,Velocity_KI=1.5;
+  if(!basevel) {
+    Velocity_KP=8,Velocity_KI=6;            //速度控制PID参数
+    qg_velL = qg_velR = 0; return;
+  }
+  qg_velL = basevel - ac[0] * 0.3 + addvel;
+  qg_velR = basevel + ac[0] * 0.3 + addvel;
+
+}

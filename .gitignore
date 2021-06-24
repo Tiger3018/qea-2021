@@ -1,0 +1,11 @@
+*.swp
+*~
+*.uvguix*
+*.uvoptx
+
+*.BAT
+.vscode/
+DebugConfig/
+Listings/
+Objects/
+RTE/

@@ -19,9 +19,8 @@
 
 void USART3_Init(s32);
 void UART5_Init(s32);
-void USART3_Send(s32, ...);
-void UART5_Send(s32, ...);
 void UART5_Interact(s16);
+void UART_Send(USART_TypeDef*, s32, ...);
 
 /*
 void USART1_Init(void);

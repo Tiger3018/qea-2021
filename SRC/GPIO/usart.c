@@ -2,6 +2,10 @@
 #include "usart.h"
 #include "oled.h"
 #include <stdarg.h>
+#include <stm32f10x_dma.h>
+
+#define EN_UART5_RX 0
+#define EN_UART5_DMA 1
 
 USART_InitTypeDef USART_InitStructure = {
     .USART_WordLength = USART_WordLength_8b, //字长为 8 位
@@ -12,43 +16,7 @@ USART_InitTypeDef USART_InitStructure = {
 };
 GPIO_InitTypeDef GPIO_InitStructure;
 NVIC_InitTypeDef NVIC_InitStructure;
-
-#define SEND_FUNC(num, UNAME) ({ \
-    static s8 now_num; \
-    static s32 temp; \
-    va_list list_num; \
-    temp = num; \
-    va_start(list_num, num); \
-    do \
-    { \
-        while(USART_GetFlagStatus(UNAME, USART_FLAG_TXE) != SET) nullVar = UNAME -> DR; \
-        if((now_num = num >> 24)) \
-        { \
-            USART_SendData(UNAME, now_num); \
-            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); \
-        } \
-        else return; \
-        if((now_num = (num >> 16) & 0xFF)) \
-        { \
-            USART_SendData(UNAME, now_num); \
-            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); \
-        } \
-        else return; \
-        if((now_num = (num >> 8) & 0xFF)) \
-        { \
-            USART_SendData(UNAME, now_num); \
-            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); \
-        } \
-        else return; \
-        if((now_num = num & 0xFF)) \
-        { \
-            USART_SendData(UNAME, now_num); \
-            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); \
-        } \
-        else return; \
-    } \
-    while((now_num = va_arg(list_num, s32))); \
-})
+DMA_InitTypeDef DMA_InitStructure;
 
 void USART3_Init(s32 baud)
 {
@@ -106,18 +74,50 @@ void UART5_Init(s32 baud)
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); //开启中断
     #endif /* EN_UART5_RX */
 
+    #if EN_UART5_DMA
+    DMA_DeInit(DMA1_Channel1);
+    #endif /* EN_UART5_DMA */
+
     USART_Cmd(UART5, ENABLE); 
 }
 
-inline void UART5_Send(s32 num, ...)
+inline void UART_Send(USART_TypeDef* UNAME, s32 num, ...)
 {
-    SEND_FUNC(num, UART5);
+    static s8 now_num; 
+    static s32 temp; 
+    va_list list_num; 
+    temp = num; 
+    va_start(list_num, num); 
+    do 
+    { 
+        //while(USART_GetFlagStatus(UNAME, USART_FLAG_TXE) != SET) nullVar = UNAME -> DR; 
+        if((now_num = num >> 24)) 
+        { 
+            USART_SendData(UNAME, now_num); 
+            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
+        } 
+        else return; 
+        if((now_num = (num >> 16) & 0xFF)) 
+        { 
+            USART_SendData(UNAME, now_num); 
+            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
+        } 
+        else return; 
+        if((now_num = (num >> 8) & 0xFF)) 
+        { 
+            USART_SendData(UNAME, now_num); 
+            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
+        } 
+        else return; 
+        if((now_num = num & 0xFF)) 
+        { 
+            USART_SendData(UNAME, now_num); 
+            while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
+        } 
+        else return; 
+    }while((now_num = va_arg(list_num, s32))); 
 }
 
-inline void USART3_Send(s32 num, ...)
-{
-    SEND_FUNC(num, USART3);
-}
 
 void UART5_Interact(s16 num)
 {

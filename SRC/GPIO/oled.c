@@ -66,7 +66,7 @@ void OLED_Clear(void)
 {  
     u8 i,n;  
     for(i=0;i<8;i++)for(n=0;n<128;n++)OLED_GRAM[n][i]=0X00;  
-    OLED_ShowString(0, 50, (const unsigned char *)"~C~");
+    OLED_ShowString(0, 58, (const unsigned char *)"~^~");
     OLED_RefreshGram();//更新显示
 }
 //画点 

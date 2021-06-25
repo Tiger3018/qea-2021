@@ -8,6 +8,11 @@
 #define RP_Send(...) UART_Send(RP_USART, __VA_ARGS__)
 #define RP_MAX_TIME 60000 // 600 min value, so STM32 faster than rpLIDAR (??)
 
+#define CARE(VAL) ({ \
+        __typeof__ (VAL) _VAL = (VAL); \
+        ((_VAL > 50) ? 50 : ((_VAL < 0) ? 1 : _VAL)); \
+    })
+
 #define RP_GET(bufName, num, tct) \
     ({ tct = 0;\
         while(tct != RP_MAX_TIME && USART_GetFlagStatus(RP_USART, USART_FLAG_RXNE) != SET) ++ tct; \
@@ -69,20 +74,27 @@ s32 RP_SaveData(void)
             saveData[tot][0] = ((u16)buffer[2] << 7) | (buffer[1] >> 1);
             saveData[tot][1] = ((u16)buffer[4] << 8) | (buffer[3]);
             saveData[tot][2] = buffer[0];
-            if(++ tot >= 100) break;
-            OLED_ShowNumber(0, 10, tot, 2, 12); 
+            if(++ tot >= 160) break;
+            //OLED_ShowNumber(0, 10, tot, 2, 12); 
             //OLED_RefreshGram(); // Data Loss...
         }
         // TODO: May not found any valid dot.
     }
     RP_Send(0xA5250000, 0);
     OLED_Clear();
+    OLED_DrawPoint(25, 25, 1);
+    OLED_ShowString(0, 52, "center point...");
+    OLED_RefreshGram();
+    DELAY_ms(800); // where is the center point?
+    OLED_Clear();
     for(int i = 0; i < tot; ++ i)
     {
         u32 th = saveData[i][0] >> 6, ro = saveData[i][1] >> 2;
         double x = ro * cos(th * 3.1415926 / 180), y = ro * sin(th * 3.1415926 / 180);
-        //OLED_ShowNumber(i, 10, i + 200, 3, 12); // ProgressBar
-        OLED_DrawPoint((u8)(63.5 + x / 4), (u8)(31.5 + y / 4), 1); // DotMap
+        OLED_ShowNumber(0, 52, i, 2, 12); // Progress
+        OLED_ShowString(12, 52, ":   du"); // Progress
+        OLED_ShowNumber(18, 52, th, 3, 12); // Progress
+        OLED_DrawPoint(CARE(25 - y / 25), CARE(25 + x / 25), 1); // DotMap - SO it will show a UP map.
         OLED_RefreshGram();
         printf("%d [%u] th %u ro %u <%.4f, %.4f>\n", i, saveData[i][2], th, ro, x, y);
     }

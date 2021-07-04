@@ -66,7 +66,7 @@ void OLED_Clear(void)
 {  
     u8 i,n;  
     for(i=0;i<8;i++)for(n=0;n<128;n++)OLED_GRAM[n][i]=0X00;  
-    OLED_ShowString(0, 58, (const unsigned char *)"~^~");
+    OLED_ShowString(0, 58, "~^~");
     OLED_RefreshGram();//更新显示
 }
 //画点 
@@ -150,7 +150,7 @@ void OLED_ShowNumber(u8 x,u8 y,u32 num,u8 len,u8 size)
 //x,y:起点坐标  
 //*p:字符串起始地址
 //用16字体
-void OLED_ShowString(u8 x, u8 y, const u8 *p)
+void OLED_ShowString(u8 x, u8 y, const char *p)
 {
 #define MAX_CHAR_POSX 122
 #define MAX_CHAR_POSY 58          

@@ -12,7 +12,7 @@
 #define PWMB2   MOTOR_TIM->CCR2
 
 void PWM_Init(u16 arr,u16 psc);
-void PWM_Set(s32, s32);
+void MOTOR_Set(s16, s16);
 //void Servo_PWM_Init(u16 arr,u16 psc);
 
 #endif /* __MOTOR_H */

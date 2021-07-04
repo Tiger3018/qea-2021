@@ -5,7 +5,7 @@
 #include <stm32f10x_dma.h>
 
 #define EN_UART5_RX 0
-#define EN_UART5_DMA 1
+#define EN_UART5_DMA 0
 
 static USART_InitTypeDef USART_InitStructure = {
     .USART_WordLength = USART_WordLength_8b, //字长为 8 位
@@ -75,7 +75,21 @@ void UART5_Init(s32 baud)
     #endif /* EN_UART5_RX */
 
     #if EN_UART5_DMA
+    DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(UART5 -> DR);/* UART2接收数据地址 */
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)saveData; /* 接收buf */
+    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;  /* 传输方向:外设->内存 */
+    DMA_InitStructure.DMA_BufferSize = 3700; /* 接收buf大小 */
+    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable; 
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable; 
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; 
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+    DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh; 
+    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable; 
     DMA_DeInit(DMA1_Channel1);
+    DMA_ClearFlag(DMA1_IT_TC1); /* 清除相关状态标识 */
+    DMA_ClearFlag(DMA1_IT_HT1);
+    DMA_Init(DMA1_Channel1, &DMA_InitStructure); 
     #endif /* EN_UART5_DMA */
 
     USART_Cmd(UART5, ENABLE); 
@@ -117,7 +131,6 @@ inline void UART_Send(USART_TypeDef* UNAME, s32 num, ...)
         //else return; 
     }while((temp = va_arg(list_num, s32))); 
 }
-
 
 void UART5_Interact(s16 num)
 {

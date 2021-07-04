@@ -46,16 +46,21 @@ void PWM_Init(u16 arr, u16 psc)
     TIM_Cmd(MOTOR_TIM, ENABLE); //使能TIM
 }
 
-void PWM_Set(s32 motor_a, s32 motor_b)
+void MOTOR_Set(s16 motor_a, s16 motor_b)
 {
+    if(!(motor_a | motor_b))
+    {
+        PWMA1 = PWMA2 = PWMB1 = PWMB2 = 0;
+        return;
+    }
+
     if(motor_a > 0)
-        PWMA1 = 7200,PWMA2 = 7200 - motor_a;
+        PWMA1 = 7200, PWMA2 = 7200 - motor_a;
     else
-        PWMA2 = 7200,PWMA1=7200+motor_a;
+        PWMA2 = 7200, PWMA1 = 7200 + motor_a;
 
     if(motor_b > 0)
-        PWMB1 = 7200,PWMB2=7200-motor_b;
+        PWMB1 = 7200, PWMB2 = 7200 - motor_b;
     else
-        PWMB2 = 7200,PWMB1=7200+motor_b;
-    //SERVO=servo;	
+        PWMB2 = 7200, PWMB1 = 7200 + motor_b;
 }

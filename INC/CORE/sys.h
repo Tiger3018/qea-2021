@@ -74,7 +74,7 @@
 
 /* following is function may be used. */
 
-void sys_init(void);
+void SYS_Init(void);
 void DELAY_ms(u16);
 
 extern u8 nullVar;

@@ -7,6 +7,8 @@
 #define RP_USART UART5
 #define RP_Send(...) UART_Send(RP_USART, __VA_ARGS__)
 #define RP_MAX_TIME 60000 // 600 min value, so STM32 faster than rpLIDAR (??)
+#define RP_NONE_DATA_THRESHOLD 1000
+#define RP_DOT_DATA_THRESHOLD 350
 
 #define CARE(VAL) ({ \
         __typeof__ (VAL) _VAL = (VAL); \
@@ -29,55 +31,86 @@
         bufName[num] ^= ((tct == RP_MAX_TIME) ? 0 : USART_ReceiveData(RP_USART)); \
     })
 
-static u16 saveData[1009][3], dotData[1009][4]; /* theta, distance, first */
+static u16 saveData[RP_DOT_DATA_THRESHOLD][4], dotData[RP_DOT_DATA_THRESHOLD][4], maxTimeTempU16Variable; /* theta, distance */
+static double dotDouble[RP_DOT_DATA_THRESHOLD][2];
+#define VAR_TCTN maxTimeTempU16Variable
+/*static u8 tmp[1009];*/
 
 s32 RP_SaveData(void)
 {
     u8 buffer[10] = {0};
-    u16 cnt = 0, tctn = 0, tot = 0, non = 0;
+    u16 cnt = 0, tot = 0, non = 0;
+    /** Software Reset **/
     nullVar = RP_USART -> SR; nullVar = RP_USART -> DR; // Clear any ERROR Flag
+    RP_Send(0xA525, 0);
+    DELAY_ms(100);
+    /** **/
     RP_Send(0xA520, 0);
     buffer[0] = buffer[1] = 0;
     for(; cnt != 2; ++ cnt)
-        RP_GET_OR(buffer, 0, tctn);
+        RP_GET_OR(buffer, 0, VAR_TCTN);
     if(buffer[0] != 0xFF)
     {
+        buffer[9] = RP_USART -> SR;
         RP_Send(0xA525, 0);
-        printf("err in open scanning!! AB|CD = %d sending 0xA5, 0x25\n", buffer[0]);
+        printf("err in open scanning!! AB|CD = %d SR = %d sending 0xA5, 0x25\n", buffer[0], buffer[9]);
         return 1;
     } 
     for(; cnt != 7; ++ cnt)
-        RP_GET_XOR(buffer, 1, tctn);
+        RP_GET_XOR(buffer, 1, VAR_TCTN);
     if(buffer[1] != 0xC4)
     {
         RP_Send(0xA525, 0);
-        // DEBUG printf("err in open scanning!! ELSE XOR %d %d %d %d sending 0xA5, 0x25\n", buffer[2], buffer[3], buffer[4], buffer[5]);
         printf("err in open scanning!! ELSE XOR %d sending 0xA5, 0x25\n", buffer[1]);
         return 1;
     }
-    printf("such a brilliant!");
-    // DEBUG
-    /*RP_GET(buffer, 0, tctn); RP_GET(buffer, 1, tctn); RP_GET(buffer, 2, tctn); RP_GET(buffer, 3, tctn); RP_GET(buffer, 4, tctn);
-    OLED_ShowNumber(0, 0, buffer[0], 2, 12); OLED_ShowNumber(12, 0, buffer[1], 2, 12);
-    OLED_ShowNumber(24, 0, buffer[2], 2, 12); OLED_ShowNumber(36, 0, buffer[3], 2, 12);
-    OLED_ShowNumber(48, 0, buffer[4], 2, 12); OLED_RefreshGram(); -> 0 0 0 0 0
-    DELAY_ms(30000);*/
-    while(1)
+    printf("START\n");
+    /** WAIT until a new scan start... **/
+    while(non <= RP_NONE_DATA_THRESHOLD)
     {
-        RP_GET(buffer, 0, tctn);
-        if(buffer[0] != 0x3E && buffer[0] != 0x02)
-            {++non; continue;}
-        for(cnt = 1; cnt != 5; ++ cnt)
-            RP_GET(buffer, cnt, tctn);
-        if(1/*(buffer[1] & 1) && (buffer[3] & buffer[4])*/) // many points with distance 0
+        RP_GET(buffer, 0, VAR_TCTN);
+        if(buffer[0])
+        {
+            for(cnt = 1; cnt != 5; ++ cnt)
+                RP_GET(buffer, cnt, VAR_TCTN);
+            if((buffer[0] & 0x3) == 0b01)
+                break;
+        }
+        else
+        {
+            ++ non;
+        }
+    }
+    while(non < RP_NONE_DATA_THRESHOLD)
+    {
+        if((buffer[1] & 1) && (buffer[3] & buffer[4])) // many points with distance 0
         {
             saveData[tot][0] = ((u16)buffer[2] << 7) | (buffer[1] >> 1);
             saveData[tot][1] = ((u16)buffer[4] << 8) | (buffer[3]);
             saveData[tot][2] = buffer[0];
-            if(++ tot >= 300) break;
-            //OLED_ShowNumber(0, 10, tot, 2, 12); 
-            //OLED_RefreshGram(); // Data Loss...
+            if(++ tot == RP_DOT_DATA_THRESHOLD) break;
         }
+        /*
+        WITHOUT USART message, OLED_Refresh, every dot will received properly.
+        if(USART_GetFlagStatus(RP_USART, USART_FLAG_ORE))
+        {
+            ++ non;
+            USART_ClearFlag(RP_USART, USART_FLAG_ORE);
+        }
+        */
+        RP_GET(buffer, 0, VAR_TCTN);
+        if((buffer[0] & 0x3) != 0b10) // != 0x3E && buffer[0] != 0x02 && buffer[0] != 0x3A
+        {
+            if(!buffer[0])
+                {++non; continue;}
+            if((buffer[0] & 0x3) == 0b01)
+                {break;}
+            RP_Send(0xA525, 0);
+            printf("err in broken package!! (tot=%d | %d) FIRST HEX NUMBER %d sending 0xA5, 0x25\n", tot, buffer[2], buffer[0]);
+            return 2;
+        }
+        for(cnt = 1; cnt != 5; ++ cnt)
+            RP_GET(buffer, cnt, VAR_TCTN);
         // TODO: May not found any valid dot.
     }
     RP_Send(0xA525, 0);
@@ -89,20 +122,20 @@ s32 RP_SaveData(void)
     OLED_Clear();
     for(int i = 0; i < tot; ++ i)
     {
-        /*
         dotData[i][0] = saveData[i][0] >> 6;
         dotData[i][1] = saveData[i][0] & 0x3F;
         dotData[i][2] = saveData[i][1] >> 2;
         dotData[i][3] = saveData[i][1] & 0x3;
-        */
-        u32 th = saveData[i][0] >> 6, ro = saveData[i][1] >> 2;
-        double x = ro * cos(th * 3.1415926 / 180), y = ro * sin(th * 3.1415926 / 180);
+        //dotData[i][4] = dotData[i][0] * 
+        dotDouble[i][0] = dotData[i][2] * cos(dotData[i][0] * 3.1415926 / 180);
+        dotDouble[i][1] = dotData[i][2] * sin(dotData[i][0] * 3.1415926 / 180);
         OLED_ShowNumber(0, 52, i, 2, 12); // Progress
         OLED_ShowString(12, 52, ":   du"); // Progress
-        OLED_ShowNumber(18, 52, th, 3, 12); // Progress
-        OLED_DrawPoint(CARE(25 - y / 25), CARE(25 + x / 25), 1); // DotMap - SO it will show a UP map.
+        OLED_ShowNumber(18, 52, dotData[i][0], 3, 12); // Progress
+        OLED_DrawPoint(CARE(25 + dotDouble[i][1] / 25), CARE(25 - dotDouble[i][0] / 25), 1); // DotMap - SO it will show a UP map.
         OLED_RefreshGram();
-        printf("%d [%u] th %u ro %u <%.4f, %.4f>\n", i, non, th, ro, x, y);
+        printf("[%d, %u.%u, %u.%u, %u, %.4f, %.4f]\n", i, dotData[i][0], dotData[i][1],
+            dotData[i][2], dotData[i][3], saveData[i][2], dotDouble[i][0], dotDouble[i][1]);
     }
     return 0;
 }

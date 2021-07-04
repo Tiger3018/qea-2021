@@ -7,16 +7,16 @@
 #define EN_UART5_RX 0
 #define EN_UART5_DMA 1
 
-USART_InitTypeDef USART_InitStructure = {
+static USART_InitTypeDef USART_InitStructure = {
     .USART_WordLength = USART_WordLength_8b, //字长为 8 位
     .USART_StopBits = USART_StopBits_1, //一个停止位
     .USART_Parity = USART_Parity_No, //无奇偶校验位
     .USART_HardwareFlowControl = USART_HardwareFlowControl_None, //无硬件数据流控制
     .USART_Mode = USART_Mode_Tx | USART_Mode_Rx // 收发模式
 };
-GPIO_InitTypeDef GPIO_InitStructure;
-NVIC_InitTypeDef NVIC_InitStructure;
-DMA_InitTypeDef DMA_InitStructure;
+static GPIO_InitTypeDef GPIO_InitStructure;
+static NVIC_InitTypeDef NVIC_InitStructure;
+static DMA_InitTypeDef DMA_InitStructure;
 
 void USART3_Init(s32 baud)
 {
@@ -91,31 +91,31 @@ inline void UART_Send(USART_TypeDef* UNAME, s32 num, ...)
     do 
     { 
         //while(USART_GetFlagStatus(UNAME, USART_FLAG_TXE) != SET) nullVar = UNAME -> DR; 
-        if((now_num = num >> 24)) 
+        if((now_num = temp >> 24)) 
         { 
             USART_SendData(UNAME, now_num); 
             while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
         } 
-        else return; 
-        if((now_num = (num >> 16) & 0xFF)) 
+        //else return; 
+        if((now_num = (temp >> 16) & 0xFF)) 
         { 
             USART_SendData(UNAME, now_num); 
             while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
         } 
-        else return; 
-        if((now_num = (num >> 8) & 0xFF)) 
+        //else return; 
+        if((now_num = (temp >> 8) & 0xFF)) 
         { 
             USART_SendData(UNAME, now_num); 
             while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
         } 
-        else return; 
-        if((now_num = num & 0xFF)) 
+        //else return; 
+        if((now_num = temp & 0xFF)) 
         { 
             USART_SendData(UNAME, now_num); 
             while(USART_GetFlagStatus(UNAME, USART_FLAG_TC) != SET); 
         } 
-        else return; 
-    }while((now_num = va_arg(list_num, s32))); 
+        //else return; 
+    }while((temp = va_arg(list_num, s32))); 
 }
 
 

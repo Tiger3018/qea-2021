@@ -10,3 +10,4 @@
 #include "usart.h"
 #include "rplidar.h"
 #include "oled.h"
+#include "motor.h"

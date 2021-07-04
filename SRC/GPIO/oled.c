@@ -76,7 +76,7 @@ void OLED_Clear(void)
 void OLED_DrawPoint(u8 x,u8 y,u8 t)
 {
     u8 pos,bx,temp=0;
-    if(x>127||y>63)return;//超出范围了.
+    if(x > 127 || y > 63 || x < 0 || y < 0)return;//超出范围了.
     pos=7-y/8;
     bx=y%8;
     temp=1<<(7-bx);
@@ -150,7 +150,7 @@ void OLED_ShowNumber(u8 x,u8 y,u32 num,u8 len,u8 size)
 //x,y:起点坐标  
 //*p:字符串起始地址
 //用16字体
-void OLED_ShowString(u8 x,u8 y,const s8 *p)
+void OLED_ShowString(u8 x, u8 y, const u8 *p)
 {
 #define MAX_CHAR_POSX 122
 #define MAX_CHAR_POSY 58          

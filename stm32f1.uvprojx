@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_ HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>INC;INC\USER;INC\CORE;INC\GPIO</IncludePath>
+              <IncludePath>INC;INC\USER;INC\CORE;INC\GPIO;INC\TIMER</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -388,6 +388,16 @@
               <FileType>1</FileType>
               <FilePath>.\SRC\USER\user.c</FilePath>
             </File>
+            <File>
+              <FileName>status.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SRC\USER\status.c</FilePath>
+            </File>
+            <File>
+              <FileName>taskforce.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SRC\USER\taskforce.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -417,6 +427,16 @@
               <FileName>rplidar.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SRC\GPIO\rplidar.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>TIMER</GroupName>
+          <Files>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SRC\TIMER\motor.c</FilePath>
             </File>
           </Files>
         </Group>

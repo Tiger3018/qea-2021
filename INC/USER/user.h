@@ -11,3 +11,4 @@
 #include "rplidar.h"
 #include "oled.h"
 #include "motor.h"
+#include "encoder.h"

@@ -8,6 +8,6 @@
 void TIM2_InitEncoder(void);
 void TIM3_Init(u16, u16);
 void TIM4_InitEncoder(void);
-u16 ENCODER_Read(u8);
+s16 ENCODER_Read(u8);
 
 #endif /* __ENCODER_H */

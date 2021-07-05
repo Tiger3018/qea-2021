@@ -4,6 +4,13 @@ static GPIO_InitTypeDef GPIO_InitStructure;
 static TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 static TIM_OCInitTypeDef TIM_OCInitStructure;
 
+#define PWM_MAXV 6900
+#define PWM_CARE(val) ((val > PWM_MAXV ) ? PWM_MAXV : ((val < - PWM_MAXV) ? - PWM_MAXV : val))
+#define MOTOR_VEL_KP 10
+#define MOTOR_VEL_KI 10
+
+static s16 mDesired[2];
+
 /**
   * @brief 函数功能：舵机PWM以及定时中断初始化
   * @param arr：自动重装值
@@ -48,6 +55,8 @@ void PWM_Init(u16 arr, u16 psc)
 
 void PWM_Set(s16 motor_a, s16 motor_b)
 {
+    motor_a = PWM_CARE(motor_a);
+    motor_b = PWM_CARE(motor_b);
     if(motor_a > 0)
         PWMA1 = 7200, PWMA2 = 7200 - motor_a;
     else
@@ -64,7 +73,42 @@ void MOTOR_Set(s16 motor_a, s16 motor_b)
     if(!(motor_a | motor_b))
     {
         PWMA1 = PWMA2 = PWMB1 = PWMB2 = 0;
+        TIM_ITConfig(TIM3, TIM_IT_Update, DISABLE);
         return;
     }
+    else
+    {
+        mDesired[0] = motor_a; mDesired[1] = motor_b;
+        PWM_Set(mDesired[0], mDesired[1]);
+        TIM2 -> CNT = TIM4 -> CNT = 0;
+        TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
+    }
 
+}
+
+s16 MOTOR_IncrementalPI (s16 Encoder, s16 Target, s16 staticSlot)
+{ 	
+    static s16 Bias[4], Pwm, Last_bias[4];
+    Bias[staticSlot] = Encoder - Target; //计算偏差
+    Pwm += MOTOR_VEL_KP * (Bias[staticSlot] - Last_bias[staticSlot]) 
+        + MOTOR_VEL_KI * Bias[staticSlot];   //增量式PI控制器
+    if(Pwm>7200)Pwm=7200;
+    if(Pwm<-7200)Pwm=-7200;
+    Last_bias[staticSlot] = Bias[staticSlot]; //保存上一次偏差 
+    return Pwm; //增量输出
+}
+
+
+void TIM3_IRQHandler(void)
+{
+    s16 getRet[2];
+    if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
+    {
+        TIM_ClearITPendingBit(TIM3, TIM_IT_Update); // 清除 TIM 3 更新 中断 标志
+        getRet[0] = ENCODER_Read(2);
+        getRet[1] = ENCODER_Read(4);
+        printf("wait for any %d %d\n", getRet[0], getRet[1]);
+        PWM_Set(MOTOR_IncrementalPI(getRet[0], mDesired[0], 0),
+                MOTOR_IncrementalPI(getRet[1], mDesired[1], 1));
+    }
 }

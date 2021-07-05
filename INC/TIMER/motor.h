@@ -2,6 +2,7 @@
 #define __MOTOR_H
 
 #include "sys.h"
+#include "encoder.h"
 #include <stm32f10x_tim.h>
 
 #define MOTOR_TIM TIM8

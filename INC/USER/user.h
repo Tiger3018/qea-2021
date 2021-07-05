@@ -12,3 +12,6 @@
 #include "oled.h"
 #include "motor.h"
 #include "encoder.h"
+
+#include "taskforce.h"
+#include "status.h"

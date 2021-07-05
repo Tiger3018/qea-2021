@@ -25,7 +25,7 @@ void SYS_Init(void)
 void DELAY_ms(u16 timeValue)
 {
     u32 temp;		   
-    SysTick->LOAD=(u32)timeValue*fac_ms;				//时间加载(SysTick->LOAD为24bit)
+    SysTick -> LOAD = timeValue * fac_ms;				//时间加载(SysTick->LOAD为24bit)
     SysTick->VAL =0x00;							//清空计数器
     SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;	//开始倒数  
     do

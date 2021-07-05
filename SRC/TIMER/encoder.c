@@ -95,9 +95,9 @@ void TIM4_InitEncoder(void)
     TIM_Cmd(TIM4, ENABLE); 
 }
 
-u16 ENCODER_Read(u8 TIMX)
+s16 ENCODER_Read(u8 TIMX)
 {
-    static u16 Encoder_TIM;    
+    static s16 Encoder_TIM;    
     switch(TIMX)
     {
         case 2:
@@ -113,12 +113,4 @@ u16 ENCODER_Read(u8 TIMX)
             break;
     }
     return Encoder_TIM;
-}
-
-void TIM3_IRQHandler(void)
-{
-    if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
-    {
-        TIM_ClearITPendingBit(TIM3, TIM_IT_Update); // 清除 TIM 3 更新 中断 标志
-    }
 }

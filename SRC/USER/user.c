@@ -16,6 +16,7 @@ int main()
         //UART_Send(UART5, 0xA5250000, 0);
         OLED_ShowString(10, 10, "Init...\n");
         OLED_RefreshGram();
+            DELAY_ms(6000);
         if((ret = RP_SaveData()) < 0)
         {
             MOTOR_Set(0, 0);
@@ -28,8 +29,9 @@ int main()
         else
         {
             printf("%d!\n", ret);
-            STATUS_CirclePoints(dotDouble[0], dotDouble[1], ret);
+            STATUS_CirclePoints(dotData, dotDouble, ret);
             MOTOR_Set(200, 200);
+            DELAY_ms(4000);
         }
     }
     // led_show();

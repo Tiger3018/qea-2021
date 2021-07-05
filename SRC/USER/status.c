@@ -5,19 +5,19 @@
 /** @note tot(dotX[tot]): can access dotX[0] - dotX[tot - 1]
   *
   */ 
-double* STATUS_CirclePoints(double* random_x, double* random_y, u16 tot)
+double* STATUS_CirclePoints(u16 polarD[][4], double planeD[][2], u16 tot)
 {
     //定义变量
-    double u = 235.5, v, sigma = 0.001, best_x = 0, best_y = 0;
+    double u = 235.5, v, sigma = 0.001, sigma0, best_x = 0, best_y = 0;
     static double x_1, x_2, y_1, y_2, a, x_0, y_0, temp1, tempcos, tempsin, tempdx, tempdy, tempx1, tempx2, tempy1, tempy2;
     s32 time = 0, pretotal = 0, num = 2, test = 10;
     static double final_points[5];
     while (time < tot - num)
     {
-        x_1 = random_x[time];
-        x_2 = random_x[time + num];
-        y_1 = random_y[time];
-        y_2 = random_y[time + num];
+        x_1 = planeD[time][0];
+        x_2 = planeD[time + num][0];
+        y_1 = planeD[time][1];
+        y_2 = planeD[time + num][1];
         a = (y_2 - y_1) / (x_2 - x_1);
         x_0 = (x_1 + x_2) / 2;
         y_0 = (y_1 + y_2) / 2;
@@ -38,9 +38,9 @@ double* STATUS_CirclePoints(double* random_x, double* random_y, u16 tot)
         {
             for (int index = time - test; index <= time + test; index++)
             {
-                if (fabs((pow((random_x[index] - tempx1), 2) + pow((random_y[index] - tempy1), 2)) - v) < sigma)
+                if (fabs((pow((planeD[index][0] - tempx1), 2) + pow((planeD[index][1] - tempy1), 2)) - v) < sigma)
                     total_inlier1++;
-                if (fabs((pow((random_x[index] - tempx2), 2) + pow((random_y[index] - tempy2), 2)) - v) < sigma)
+                if (fabs((pow((planeD[index][0] - tempx2), 2) + pow((planeD[index][1] - tempy2), 2)) - v) < sigma)
                     total_inlier2++;
             }
             if (total_inlier1 > pretotal)
@@ -60,7 +60,7 @@ double* STATUS_CirclePoints(double* random_x, double* random_y, u16 tot)
         }
         time += num;
     }
-    printf("\%CIRCLE_ANS\%\n[%.4f, %.4f]\n",best_x,best_y);
+    printf("%%CIRCLE_ANS%%\n[%.4f, %.4f]\n",best_x,best_y);
     final_points[0] = best_x;
     final_points[1] = best_y;
     return final_points; /* static s32[5] */

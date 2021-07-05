@@ -4,7 +4,7 @@
 
 int main()
 {
-    u8 ret;
+    s32 ret;
     SYS_Init();
     OLED_Init();
     USART3_Init(9600);
@@ -16,9 +16,10 @@ int main()
         //UART_Send(UART5, 0xA5250000, 0);
         OLED_ShowString(10, 10, "Init...\n");
         OLED_RefreshGram();
-        if((ret = RP_SaveData()))
+        if((ret = RP_SaveData()) < 0)
         {
             MOTOR_Set(0, 0);
+            OLED_Clear();
             OLED_ShowString(10, 10, "Return:\n");
             OLED_ShowNumber(52, 10, ret, 1, 12);
             OLED_RefreshGram();
@@ -26,7 +27,9 @@ int main()
         }
         else
         {
-
+            printf("%d!\n", ret);
+            STATUS_CirclePoints(dotDouble[0], dotDouble[1], ret);
+            MOTOR_Set(200, 200);
         }
     }
     // led_show();

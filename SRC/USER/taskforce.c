@@ -5,7 +5,7 @@ void TASK_ChaseCircle(u8 status, s32 command[4])
 {
     switch (status)
     {
-    case 0:
+    case 0                                                                                                                                                                                                                                                                                                                                                                              :
         /* code */
         break;
     

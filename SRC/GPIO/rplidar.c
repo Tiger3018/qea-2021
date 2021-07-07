@@ -135,7 +135,8 @@ s32 RP_SaveData(void)
         dotDouble[i][0] = dotData[i][2] * cos(dotData[i][0] * 3.1415926 / 180);
         dotDouble[i][1] = dotData[i][2] * sin(dotData[i][0] * 3.1415926 / 180);
         //printf("[%d, %u.%u, %u.%u, %u, %.4f, %.4f]\n", i, dotData[i][0], dotData[i][1],
-        // dotData[i][2], dotData[i][3], saveData[i][2], dotDouble[i][0], dotDouble[i][1]);
+			//dotData[i][2], dotData[i][3], saveData[i][2], dotDouble[i][0], dotDouble[i][1]);
+			printf("[%d,%.4f,%.4f]\n",i,dotDouble[i][0],dotDouble[i][1]);
         OLED_ShowNumber(0, 52, i, 2, 12); // Progress
         OLED_ShowString(12, 52, ":   du   </>"); // Progress
         OLED_ShowNumber(18, 52, dotData[i][0], 3, 12); // Progress
